@@ -91,6 +91,7 @@ class Tracker {
         this.dataCollection = dataCollection; 
         this.sessionManager = sessionManager; 
         this.uid = sessionManager.getUserID(); 
+        this.country = country; 
         if(country === "CN") {
             this.baseUrl = BASE_URL_CN; 
         } else {
@@ -107,6 +108,9 @@ class Tracker {
         params.sid = this.sessionManager.getSessionId(); 
         params.sdk = SDK; 
         params.v = SDK_VERSION; 
+        if(this.country) {
+            params.country = country; 
+        }
     
         params.name = eventName; 
         params.ts = new Date().getTime(); 
