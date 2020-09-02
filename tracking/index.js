@@ -1,2 +1,2 @@
-const hello= "hello world"
-console.log(hello);
+const va = require('./src/va.js'); 
+module.exports = va; 

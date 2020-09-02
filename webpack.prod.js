@@ -52,7 +52,7 @@ const config = (directory) => {
                 s3UploadOptions: {
                     Bucket: 'visenze-static'
                 },
-                basePathTransform: (() => 'widgets/dist/js'),
+                basePathTransform: (() => 'productcat/dist/js'),
             }),
         ],
         resolve: {
