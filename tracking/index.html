@@ -5,48 +5,57 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>ViSearch Widget</title>
+    <title>visenze tracking demo</title>
     <meta name="description" content="A page to test the different widgets">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
     <style type="text/css" media="screen, print">
-        /** Regular */
+
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     </style>
     <!-- build:js scripts/vendor/modernizr.js -->
     <!-- endbuild -->
 
 </head>
-<body onload="myFunction()">
+<body onload="myfunction()">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <div class="container">
-    <div class="header">
-        <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="#">Home</a></li>
-        </ul>
-        <h3 class="text-muted">Visenze Widget</h3>
-    </div>
+    <p>visenze tracking demo</p>
+    
+    <button onclick="testClick()"> Click me !</button>
 
-    <div class="vs-image-body">
-        <img src="https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"> 
-    </div>
-
+    <button onclick="productClick()">Product click</button>
 </div>
 
 <script>
-    function myFunction() {
-        let tracker = va.init({code: "test"}); 
+    var tracker; 
+    function myfunction() {
+        tracker = va.init({code: "test", uid: "1234"}); 
+    }
 
+
+    function testClick() {
+        console.log("click")
         tracker.sendEvent("testClick", {
             action: "click"
         }, err => {
-            console.log("send failed: ", err);
+            console.log("send testClick failed: ", err);
         })
 
+    }
+
+    function productClick() {
+        console.log("product click")
+        tracker.sendEvent("testProductClick", {
+            action: "product_click", 
+            queryId: "123", 
+            pid: "pid", 
+            pos: 1, 
+            imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"
+        })
     }
 
 </script> 

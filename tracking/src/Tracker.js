@@ -13,17 +13,19 @@ const TIMEOUT = 15000;
 * @param  {params}  params object
 * @return {URI}     returns self for fluent chaining
 */
-URI.prototype.addQueryParams = function (params) {
+URI.prototype.va_addQueryParams = function (params) {
     for (const property in params) {
       if (params.hasOwnProperty(property)) {
         const param = params[property];
         // do stuff
-        if (Array.isArray(param)) {
-          for (let i = 0; i < param.length; i += 1) {
-            this.addQueryParam(property, param[i]);
-          }
-        } else {
-          this.addQueryParam(property, param);
+        if(param) {
+            if (Array.isArray(param)) {
+                for (let i = 0; i < param.length; i += 1) {
+                  this.addQueryParam(property, param[i]);
+                }
+            } else {
+                this.addQueryParam(property, param);
+            }
         }
       }
     }
@@ -65,7 +67,6 @@ const sendRequest = (fetchObj, path, callback, failure) => {
             }
         })
         .catch(ex => {
-            console.error(`Failed to process ${path}`, ex);
             if (failure) {
               failure(ex);
             }                
@@ -74,9 +75,8 @@ const sendRequest = (fetchObj, path, callback, failure) => {
 
 const sendGetRequest = (path, params, callback, failure) => {
     const url = new URI(path)
-        .addQueryParams(params)
+        .va_addQueryParams(params)
         .toString(); 
-    console.log("url: ", url);    
     const fetchObj = fetch(url, {
         method: 'GET'
     });
@@ -86,13 +86,13 @@ const sendGetRequest = (path, params, callback, failure) => {
 
 
 class Tracker {
-    constructor(dataCollection, sessionManager, code, country) {
+    constructor(dataCollection, sessionManager, code, isCN=false) {
         this.code = code; 
         this.dataCollection = dataCollection; 
         this.sessionManager = sessionManager; 
         this.uid = sessionManager.getUserID(); 
-        this.country = country; 
-        if(country === "CN") {
+
+        if(isCN) {
             this.baseUrl = BASE_URL_CN; 
         } else {
             this.baseUrl = BASE_URL; 
@@ -102,21 +102,16 @@ class Tracker {
     sendEvent(eventName, dataObj, callback) {
         const path = `${this.baseUrl}/__va.gif`; 
         let defaultsParams = this.dataCollection.toJson(); 
+        defaultsParams.uid = this.sessionManager.getUserID();
+        defaultsParams.code = this.code; 
+
         let params = Object.assign(defaultsParams, dataObj); 
-        params.code = this.code; 
-        params.uid = this.sessionManager.getUserID(); 
         params.sid = this.sessionManager.getSessionId(); 
         params.sdk = SDK; 
-        params.v = SDK_VERSION; 
-        if(this.country) {
-            params.country = country; 
-        }
-    
+        params.v = SDK_VERSION;     
         params.name = eventName; 
         params.ts = new Date().getTime(); 
-        sendGetRequest(path, params, (res)=> {
-            console.log("success: ", res)
-        }, callback); 
+        sendGetRequest(path, params, null, callback); 
     }
 
     

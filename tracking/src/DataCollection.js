@@ -1,13 +1,13 @@
-const NOT_AVAILABLE = "not available"
+const NOT_AVAILABLE = "Unknown"
 class DataCollection {
     constructor() {
-        console.log("DataCollection init"); 
 
         this.getPlatform(); 
         this.getLanguage(); 
         this.getOS(); 
         this.getScreenResolution(); 
         this.getAppName(); 
+        this.getUrls(); 
     }
 
     toJson() {
@@ -17,12 +17,19 @@ class DataCollection {
         res.lang = this.language; 
         res.sr = this.resolution; 
         res.an = this.browser; 
+        res.url = this.url; 
+        res.r = this.referrer; 
         return res; 
+    }
+
+    getUrls() {
+        this.url = window.location.href; 
+        this.referrer = document.referrer; 
     }
 
     getPlatform() {
         if (navigator) {
-            this.platform = navigator.platform || NOT_AVAILABLE; 
+            this.platform = navigator.platform; 
         }
     }
 

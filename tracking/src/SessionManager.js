@@ -8,17 +8,30 @@ const KEY_SID_TIMESTAMP = "va-key-sid-timestamp";
 class SessionManager {
     constructor(uid) {
 
-        this.uid = (uid === undefined) ? this.getUID() : uid; 
+        this.uid = uid; 
+        if(!this.uid) {
+            this.uid = this.getUID(); 
+        } else {
+            // store uid in localstorage. 
+            if (typeof(Storage) !== 'undefined') {
+                localStorage.setItem(KEY_UID, this.uid);
+            }
+        }
+
         this.sid = this.getSID(); 
         this.sessionTimestamp =  this.getSessionTimestamp(); 
-        console.log("sessionManager init, uid: ", this.uid);
     }
 
     isSameDay(t1, t2) {
-        const d1 = Math.floor(t1 / DAY_IN_MS); 
-        const d2 = Math.floor(t2 / DAY_IN_MS); 
-        return d1 === d2; 
+
+        const d1 = new Date(t1); 
+        const d2 = new Date(t2); 
+        return d1.getFullYear() === d2.getFullYear() 
+            && d1.getMonth() === d2.getMonth()
+            && d1.getDate() === d2.getDate();  
     }
+
+    
 
     getSessionTimestamp() {
         if(typeof(Storage) !== "undefined") {
