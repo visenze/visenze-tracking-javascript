@@ -24,10 +24,18 @@
 
 <div class="container">
     <p>visenze tracking demo</p>
-    
-    <button onclick="testClick()"> Click me !</button>
+
+    <button onclick="testClick()">test click</button>
 
     <button onclick="productClick()">Product click</button>
+
+    <button onclick="testSearch()">test search</button>
+
+    <button onclick="testCreateView()">test create view</button>
+
+    <button onclick="testAddCart()">test add cart</button>
+
+    <button onclick="testTransaction()">test transaction </button>
 </div>
 
 <script>
@@ -39,8 +47,8 @@
 
     function testClick() {
         console.log("click")
-        tracker.sendEvent("testClick", {
-            action: "click"
+        tracker.sendEvent("click", {
+            name: "testclick"
         }, err => {
             console.log("send testClick failed: ", err);
         })
@@ -49,14 +57,62 @@
 
     function productClick() {
         console.log("product click")
-        tracker.sendEvent("testProductClick", {
-            action: "product_click", 
+        tracker.sendEvent("product_click", {
+            name: "testProductClick", 
             queryId: "123", 
             pid: "pid", 
             pos: 1, 
             imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"
+        }, err => {
+            console.log("send testProductClick failed")
         })
     }
+
+    function testSearch() {
+        console.log("test search event"); 
+
+        tracker.sendEvent("search", {
+            name: "testSearch", 
+            queryId: "123"
+        }, err => {
+            console.log("send test search failed")
+        })
+    }
+
+    function testCreateView() {
+        console.log("test create view"); 
+        tracker.sendEvent("view", {
+            name: "testView"
+        }, err => {
+            console.log("send test view failed")
+        })
+    }
+
+
+    function testAddCart() {
+        console.log("test add cart"); 
+        tracker.sendEvent("add_to_cart", {
+            name: "testAddCart", 
+            queryId: "123",
+            pid: "pid", 
+            imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg",
+            pos: 2
+        }, err => {
+            console.log("send add cart failed") 
+        })
+    }
+
+    function testTransaction() {
+        console.log("test transaction");
+        tracker.sendEvent("transaction", {
+            name: "testTransaction", 
+            queryId: "124",
+            transId: "3333", 
+            value: 24.5
+        }, err => {
+            console.log("send transaction failed")
+        })
+    }    
 
 </script> 
 

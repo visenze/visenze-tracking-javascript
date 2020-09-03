@@ -99,7 +99,7 @@ class Tracker {
         }
     }
 
-    sendEvent(eventName, dataObj, callback) {
+    sendEvent(action, dataObj, callback) {
         const path = `${this.baseUrl}/__va.gif`; 
         let defaultsParams = this.dataCollection.toJson(); 
         defaultsParams.uid = this.sessionManager.getUserID();
@@ -109,7 +109,7 @@ class Tracker {
         params.sid = this.sessionManager.getSessionId(); 
         params.sdk = SDK; 
         params.v = SDK_VERSION;     
-        params.name = eventName; 
+        params.action = action; 
         params.ts = new Date().getTime(); 
         sendGetRequest(path, params, null, callback); 
     }
