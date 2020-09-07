@@ -1,6 +1,5 @@
 
 const SESSION_TIMEOUT = 1800000; 
-const DAY_IN_MS = 86400000; 
 const KEY_UID = "va-uid"; 
 const KEY_SID = "va-key-sid";
 const KEY_SID_TIMESTAMP = "va-key-sid-timestamp"; 

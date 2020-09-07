@@ -49,7 +49,8 @@
     function testClick() {
         console.log("click")
         tracker.sendEvent("click", {
-            name: "testclick"
+            name: "testclick",
+            web_host: "test_webhost"
         }, err => {
             console.log("send testClick failed: ", err);
         })
