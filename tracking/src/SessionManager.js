@@ -8,18 +8,24 @@ const KEY_SID_TIMESTAMP = "va-key-sid-timestamp";
 class SessionManager {
     constructor(uid) {
 
-        this.uid = uid; 
-        if(!this.uid) {
-            this.uid = this.getUID(); 
-        } else {
-            // store uid in localstorage. 
-            if (typeof(Storage) !== 'undefined') {
-                localStorage.setItem(KEY_UID, this.uid);
-            }
+        if (uid) {
+            this.setLocalStorage(KEY_UID, uid); 
         }
 
-        this.sid = this.getSID(); 
         this.sessionTimestamp =  this.getSessionTimestamp(); 
+    }
+
+    setLocalStorage(key, val) {
+        if(typeof(Storage) !== 'undefined') {
+            localStorage.setItem(key, val); 
+        }
+    }
+
+    getLocalStorage(key) {
+        if(typeof(Storage) !== 'undefined') {
+            return localStorage.getItem(key);
+        }
+        return null; 
     }
 
     isSameDay(t1, t2) {
@@ -34,39 +40,24 @@ class SessionManager {
     
 
     getSessionTimestamp() {
-        if(typeof(Storage) !== "undefined") {
-            let timestamp = localStorage.getItem(KEY_SID_TIMESTAMP); 
-            if(!timestamp) {
-                timestamp = new Date().getTime(); 
-                localStorage.setItem(KEY_SID_TIMESTAMP, timestamp); 
-            }
-            return timestamp; 
+        let timestamp = this.getLocalStorage(KEY_SID_TIMESTAMP)
+        if(!timestamp) {
+            timestamp = new Date().getTime(); 
+            this.setLocalStorage(KEY_SID_TIMESTAMP, timestamp); 
         }
+        return parseInt(timestamp)
     }
-    // get sid from local storage, if uuid is not created yet 
-    // create a new sid and store in localstorage. 
-    getSID() {
-        if (typeof(Storage) !== 'undefined') {
-            let sid = localStorage.getItem(KEY_SID); 
-            if(!sid) { // initialize first
-                sid = this.generateUUID(); 
-                localStorage.setItem(KEY_SID, sid);  
-            }
-            return sid; 
-        }
-    }
+
 
     // get uid from local storage, if uuid is not created yet 
     // create a new uuid and store in localstorage. 
     getUID() {
-        if (typeof(Storage) !== 'undefined') {
-            let uid = localStorage.getItem(KEY_UID)
-            if(!uid) {
-                uid = this.generateUUID(); 
-                localStorage.setItem(KEY_UID, uid); 
-            }
-            return uid; 
-        }        
+        let uid = this.getLocalStorage(KEY_UID)
+        if(!uid) {
+            uid  = this.generateUUID()
+            this.setLocalStorage(KEY_UID, uid)
+        }
+        return uid; 
     }
 
     generateUUID() {
@@ -80,24 +71,22 @@ class SessionManager {
     }
 
     
+    
     getSessionId() {
         let now = new Date().getTime();
-        if (now - this.sessionTimestamp > SESSION_TIMEOUT || !this.isSameDay(now, this.sessionTimestamp)) {
+        let sid = this.getLocalStorage(KEY_SID); 
+        if (!sid || (now - this.sessionTimestamp) > SESSION_TIMEOUT || !this.isSameDay(now, this.sessionTimestamp)) {
             this.sessionTimestamp = now; 
-            this.sid = this.generateUUID(); 
-            if(typeof(Storage) !== 'undefined') {
-                localStorage.setItem(KEY_SID, this.sid); 
-                localStorage.setItem(KEY_SID_TIMESTAMP, this.sessionTimestamp); 
-            }
+            sid = this.generateUUID(); 
+            this.setLocalStorage(KEY_SID, sid); 
+            this.setLocalStorage(KEY_SID_TIMESTAMP, this.sessionTimestamp); 
+
         } else {
             this.sessionTimestamp = now; 
         }
-        return this.sid; 
+        return sid; 
     }
 
-    getUserID() {
-        return this.uid; 
-    }
 
 }
 
