@@ -115,8 +115,6 @@ class Tracker {
         defaultParams.sdk = SDK; 
         defaultParams.v = SDK_VERSION;     
         defaultParams.action = action; 
-
-        defaultParams.action = action; 
         defaultParams.ts = new Date().getTime(); 
         return defaultParams; 
     }
