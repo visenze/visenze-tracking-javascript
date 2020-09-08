@@ -90,7 +90,6 @@ class Tracker {
         this.code = code; 
         this.dataCollection = dataCollection; 
         this.sessionManager = sessionManager; 
-        this.uid = sessionManager.getUserID(); 
 
         if(isCN) {
             this.baseUrl = BASE_URL_CN; 
@@ -101,18 +100,26 @@ class Tracker {
 
     sendEvent(action, dataObj, callback) {
         const path = `${this.baseUrl}/__va.gif`; 
-        let defaultsParams = this.dataCollection.toJson(); 
-        defaultsParams.uid = this.sessionManager.getUserID();
-        defaultsParams.code = this.code; 
 
-        let params = Object.assign(defaultsParams, dataObj); 
-        params.sid = this.sessionManager.getSessionId(); 
-        params.sdk = SDK; 
-        params.v = SDK_VERSION;     
-        params.action = action; 
-        params.ts = new Date().getTime(); 
+        let defaultParams = this.getDefaultParams(action); 
+        let params = this.dataCollection.addData(defaultParams, dataObj); 
+
         sendGetRequest(path, params, null, callback); 
     }
+
+    getDefaultParams(action) { 
+        let defaultParams = {}; 
+        defaultParams.code = this.code; 
+        defaultParams.sid = this.sessionManager.getSessionId(); 
+        defaultParams.uid = this.sessionManager.getUID(); 
+        defaultParams.sdk = SDK; 
+        defaultParams.v = SDK_VERSION;     
+        defaultParams.action = action; 
+        defaultParams.ts = new Date().getTime(); 
+        return defaultParams; 
+    }
+
+
 
     
 

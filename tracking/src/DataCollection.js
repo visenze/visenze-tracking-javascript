@@ -1,35 +1,36 @@
 const NOT_AVAILABLE = "Unknown"
 class DataCollection {
     constructor() {
-
-        this.getLanguage(); 
-        this.getScreenResolution(); 
-        this.getUrls(); 
     }
 
-    toJson() {
-        const res = {}; 
-        res.lang = this.language; 
-        res.sr = this.resolution; 
-        res.url = this.url; 
-        res.r = this.referrer; 
-        return res; 
+    addData(defaultParams, userInput) {
+
+        defaultParams.lang = this.getLanguage(); 
+        defaultParams.sr = this.getScreenResolution(); 
+        defaultParams.url = window.location.href;
+        defaultParams.r = document.referrer;                 
+        // override/remove user input for the following fields.
+        defaultParams.db = null; 
+        defaultParams.dm = null; 
+        defaultParams.os = null; 
+        defaultParams.osv = null; 
+        defaultParams.p = null; 
+        defaultParams.web_host = null; 
+
+        return Object.assign(userInput, defaultParams); 
     }
 
-    getUrls() {
-        this.url = window.location.href; 
-        this.referrer = document.referrer; 
-    }
 
     getLanguage() {
         if(navigator) {
-            this.language = navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE 
+            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE 
         }
+        return null; 
     }
 
 
     getScreenResolution() {
-        this.resolution = screen.width + "x" + screen.height; 
+        return screen.width + "x" + screen.height; 
     }
 
 }

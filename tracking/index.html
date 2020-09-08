@@ -41,14 +41,18 @@
 <script>
     var tracker; 
     function myfunction() {
-        tracker = va.init({code: "test", uid: "1234"}); 
+        // tracker = va.init({code: "test", uid: "1234"}); 
+        tracker = va.init({code: "test"})
     }
 
 
     function testClick() {
         console.log("click")
         tracker.sendEvent("click", {
-            name: "testclick"
+            name: "testclick",
+            web_host: "test_webhost", 
+            test_data: "test",
+            os: "fake_os"
         }, err => {
             console.log("send testClick failed: ", err);
         })
