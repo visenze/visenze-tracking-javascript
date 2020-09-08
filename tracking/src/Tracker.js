@@ -77,7 +77,6 @@ const sendGetRequest = (path, params, callback, failure) => {
     const url = new URI(path)
         .va_addQueryParams(params)
         .toString(); 
-
     const fetchObj = fetch(url, {
         method: 'GET'
     });
@@ -101,19 +100,28 @@ class Tracker {
 
     sendEvent(action, dataObj, callback) {
         const path = `${this.baseUrl}/__va.gif`; 
-        let defaultsParams = this.dataCollection.toJson(); 
-        defaultsParams.code = this.code; 
 
-        let params = Object.assign(dataObj, defaultsParams); 
-        params.sid = this.sessionManager.getSessionId(); 
-        params.uid = this.sessionManager.getUID(); 
-        params.sdk = SDK; 
-        params.v = SDK_VERSION;     
-        params.action = action; 
-        params.ts = new Date().getTime(); 
+        let defaultParams = this.getDefaultParams(action); 
+        let params = this.dataCollection.addData(defaultParams, dataObj); 
 
         sendGetRequest(path, params, null, callback); 
     }
+
+    getDefaultParams(action) { 
+        let defaultParams = {}; 
+        defaultParams.code = this.code; 
+        defaultParams.sid = this.sessionManager.getSessionId(); 
+        defaultParams.uid = this.sessionManager.getUID(); 
+        defaultParams.sdk = SDK; 
+        defaultParams.v = SDK_VERSION;     
+        defaultParams.action = action; 
+
+        defaultParams.action = action; 
+        defaultParams.ts = new Date().getTime(); 
+        return defaultParams; 
+    }
+
+
 
     
 

@@ -3,40 +3,34 @@ class DataCollection {
     constructor() {
     }
 
-    toJson() {
-        // update data first
-        this.getLanguage(); 
-        this.getScreenResolution(); 
-        this.getUrls();         
+    addData(defaultParams, userInput) {
 
-        const res = {}; 
-        res.lang = this.language; 
-        res.sr = this.resolution; 
-        res.url = this.url;
+        defaultParams.lang = this.getLanguage(); 
+        defaultParams.sr = this.getScreenResolution(); 
+        defaultParams.url = window.location.href;
+        defaultParams.r = document.referrer;                 
         // override/remove user input for the following fields.
-        res.db = null; 
-        res.dm = null; 
-        res.os = null; 
-        res.osv = null; 
-        res.p = null; 
-        res.web_host = null; 
-        res.r = null;         
-        return res; 
+        defaultParams.db = null; 
+        defaultParams.dm = null; 
+        defaultParams.os = null; 
+        defaultParams.osv = null; 
+        defaultParams.p = null; 
+        defaultParams.web_host = null; 
+
+        return Object.assign(userInput, defaultParams); 
     }
 
-    getUrls() {
-        this.url = window.location.href; 
-    }
 
     getLanguage() {
         if(navigator) {
-            this.language = navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE 
+            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE 
         }
+        return null; 
     }
 
 
     getScreenResolution() {
-        this.resolution = screen.width + "x" + screen.height; 
+        return screen.width + "x" + screen.height; 
     }
 
 }

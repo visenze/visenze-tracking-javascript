@@ -6,12 +6,9 @@ const KEY_SID_TIMESTAMP = "va-key-sid-timestamp";
 
 class SessionManager {
     constructor(uid) {
-
         if (uid) {
             this.setLocalStorage(KEY_UID, uid); 
         }
-
-        this.sessionTimestamp =  this.getSessionTimestamp(); 
     }
 
     setLocalStorage(key, val) {
@@ -74,15 +71,15 @@ class SessionManager {
     getSessionId() {
         let now = new Date().getTime();
         let sid = this.getLocalStorage(KEY_SID); 
-        if (!sid || (now - this.sessionTimestamp) > SESSION_TIMEOUT || !this.isSameDay(now, this.sessionTimestamp)) {
-            this.sessionTimestamp = now; 
+        let sessionTimestamp = this.getSessionTimestamp(); 
+
+
+        if (!sid || (now - sessionTimestamp) > SESSION_TIMEOUT || !this.isSameDay(now, sessionTimestamp)) {
             sid = this.generateUUID(); 
             this.setLocalStorage(KEY_SID, sid); 
-            this.setLocalStorage(KEY_SID_TIMESTAMP, this.sessionTimestamp); 
+        } 
 
-        } else {
-            this.sessionTimestamp = now; 
-        }
+        this.setLocalStorage(KEY_SID_TIMESTAMP, now); 
         return sid; 
     }
 
