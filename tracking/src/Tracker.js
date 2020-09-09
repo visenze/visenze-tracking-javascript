@@ -103,7 +103,6 @@ class Tracker {
 
         let defaultParams = this.getDefaultParams(action); 
         let params = this.dataCollection.addData(defaultParams, dataObj); 
-
         sendGetRequest(path, params, null, callback); 
     }
 
