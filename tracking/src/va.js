@@ -8,7 +8,6 @@ module.exports = {
 
     init: function(obj) {
         let code = obj.code; 
-        let uid = obj.uid; 
         let isCN = obj.isCN; 
 
         if(this.dataCollection === undefined) {
@@ -16,7 +15,7 @@ module.exports = {
         }
 
         if(this.sessionManager === undefined) {
-            this.sessionManager = new SessionManager(uid); 
+            this.sessionManager = new SessionManager(); 
         }
 
         return new Tracker(this.dataCollection, this.sessionManager, code, isCN)

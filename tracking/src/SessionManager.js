@@ -5,10 +5,8 @@ const KEY_SID = "va-key-sid";
 const KEY_SID_TIMESTAMP = "va-key-sid-timestamp"; 
 
 class SessionManager {
-    constructor(uid) {
-        if (uid) {
-            this.setLocalStorage(KEY_UID, uid); 
-        }
+    constructor() {
+        this.getUID(); 
     }
 
     setLocalStorage(key, val) {

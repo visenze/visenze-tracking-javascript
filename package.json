@@ -2,7 +2,7 @@
   "name": "visenze-tracking-javascript",
   "version": "1.0.0",
   "description": "visenze track javascript sdk for users to send user defined data tracking event to visenze for performance monitoring and analytic purpose",
-  "main": "index.js",
+  "main": "./tracking/index.js",
   "directories": {
     "lib": "common"
   },
@@ -16,12 +16,14 @@
     "type": "git",
     "url": "git+https://github.com/visenze/visenze-tracking-javascript.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "visenze",
+    "tracking",
+    "js"
+  ],
+  "author": "shiwei.li@visenze.com",
   "license": "ISC",
   "dependencies": {
-    "classnames": "^2.2.6",
-    "form-data": "^3.0.0",
     "jsuri": "^1.3.1"
   },
   "devDependencies": {
