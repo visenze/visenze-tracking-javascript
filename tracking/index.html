@@ -39,9 +39,9 @@
 </div>
 
 <script>
-    var tracker; 
+    var tracker;
     function myfunction() {
-        // tracker = va.init({code: "test", uid: "1234"}); 
+        // tracker = va.init({code: "test", uid: "1234"});
         tracker = va.init({code: "test"})
     }
 
@@ -50,7 +50,7 @@
         console.log("click")
         tracker.sendEvent("click", {
             name: "testclick",
-            web_host: "test_webhost", 
+            web_host: "test_webhost",
             test_data: "test",
             os: "fake_os"
         }, err => {
@@ -62,10 +62,10 @@
     function productClick() {
         console.log("product click")
         tracker.sendEvent("product_click", {
-            name: "testProductClick", 
-            queryId: "123", 
-            pid: "pid", 
-            pos: 1, 
+            name: "testProductClick",
+            queryId: "123",
+            pid: "pid",
+            pos: 1,
             imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"
         }, err => {
             console.log("send testProductClick failed")
@@ -73,18 +73,18 @@
     }
 
     function testSearch() {
-        console.log("test search event"); 
+        console.log("test search event");
 
         tracker.sendEvent("search", {
-            name: "testSearch", 
-            queryId: "123"
+            name: "testSearch",
+            // queryId: "123"
         }, err => {
             console.log("send test search failed")
         })
     }
 
     function testCreateView() {
-        console.log("test create view"); 
+        console.log("test create view");
         tracker.sendEvent("view", {
             name: "testView"
         }, err => {
@@ -94,31 +94,31 @@
 
 
     function testAddCart() {
-        console.log("test add cart"); 
+        console.log("test add cart");
         tracker.sendEvent("add_to_cart", {
-            name: "testAddCart", 
+            name: "testAddCart",
             queryId: "123",
-            pid: "pid", 
+            pid: "pid",
             imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg",
             pos: 2
         }, err => {
-            console.log("send add cart failed") 
+            console.log("send add cart failed")
         })
     }
 
     function testTransaction() {
         console.log("test transaction");
         tracker.sendEvent("transaction", {
-            name: "testTransaction", 
+            name: "testTransaction",
             queryId: "124",
-            transId: "3333", 
+            transId: "3333",
             value: 24.5
         }, err => {
             console.log("send transaction failed")
         })
-    }    
+    }
 
-</script> 
+</script>
 
 </body>
 </html>

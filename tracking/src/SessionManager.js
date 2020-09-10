@@ -5,8 +5,8 @@ const KEY_SID = "va-key-sid";
 const KEY_SID_TIMESTAMP = "va-key-sid-timestamp"; 
 
 class SessionManager {
-    constructor() {
-        this.getUID(); 
+    constructor(uid) {
+        this.setUid(uid)
     }
 
     setLocalStorage(key, val) {
@@ -31,6 +31,11 @@ class SessionManager {
             && d1.getDate() === d2.getDate();  
     }
 
+    setUid(uid) {
+        if(uid) {
+            this.setLocalStorage(KEY_UID, uid)
+        }
+    }
     
 
     getSessionTimestamp() {
