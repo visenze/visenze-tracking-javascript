@@ -5,32 +5,36 @@ class DataCollection {
 
     addData(defaultParams, userInput) {
 
-        defaultParams.lang = this.getLanguage(); 
-        defaultParams.sr = this.getScreenResolution(); 
-        defaultParams.url = window.location.href;
-        defaultParams.r = document.referrer;                 
+        defaultParams.lang = this.getLanguage();
+        defaultParams.sr = this.getScreenResolution();
+        defaultParams.url = typeof window !== 'undefined' ? window.location.href : null;
+        defaultParams.r = typeof document !== 'undefined' ? document.referrer : null;
         // override/remove user input for the following fields.
-        defaultParams.db = null; 
-        defaultParams.dm = null; 
-        defaultParams.os = null; 
-        defaultParams.osv = null; 
-        defaultParams.p = null; 
-        defaultParams.web_host = null; 
+        defaultParams.db = null;
+        defaultParams.dm = null;
+        defaultParams.os = null;
+        defaultParams.osv = null;
+        defaultParams.p = null;
+        defaultParams.web_host = null;
 
-        return Object.assign(userInput, defaultParams); 
+        return Object.assign(userInput, defaultParams);
     }
 
 
     getLanguage() {
-        if(navigator) {
-            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE 
+        if (typeof navigator !== 'undefined') {
+            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE
         }
-        return null; 
+        return null;
     }
 
 
     getScreenResolution() {
-        return screen.width + "x" + screen.height; 
+        if (typeof screen !== 'undefined') {
+            return screen.width + "x" + screen.height;
+        }
+
+        return null;
     }
 
 }
