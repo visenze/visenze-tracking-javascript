@@ -56,7 +56,7 @@ const va = require('visenze-tracking-javascript');
 
 This repository comes with an example of the SDK usage. In order to run the examples, a Node.js environment is required.
 
-You will need to fill up your app keys in the relevant demo files.
+You will need to fill up your tracking code in the relevant demo files.
 
 To run the Node.js demo:
 
