@@ -2,7 +2,10 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
 <head>
     <meta charset="utf-8">
     <title>visenze tracking demo</title>
@@ -10,115 +13,129 @@
     <meta name="viewport" content="width=device-width">
 
     <style type="text/css" media="screen, print">
-
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
     </style>
     <!-- build:js scripts/vendor/modernizr.js -->
     <!-- endbuild -->
 
 </head>
+
 <body onload="myfunction()">
-<!--[if lt IE 10]>
+    <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="container">
-    <p>visenze tracking demo</p>
+    <div class="container">
+        <p>visenze tracking demo</p>
 
-    <button onclick="testClick()">test click</button>
+        <button onclick="testClick()">test click</button>
 
-    <button onclick="productClick()">Product click</button>
+        <button onclick="productClick()">Product click</button>
 
-    <button onclick="testSearch()">test search</button>
+        <button onclick="testSearch()">test search</button>
 
-    <button onclick="testCreateView()">test create view</button>
+        <button onclick="testCreateView()">test create view</button>
 
-    <button onclick="testAddCart()">test add cart</button>
+        <button onclick="testAddCart()">test add cart</button>
 
-    <button onclick="testTransaction()">test transaction </button>
-</div>
+        <button onclick="testTransaction()">test transaction </button>
+    </div>
 
-<script>
-    var tracker;
-    function myfunction() {
-        // tracker = va.init({code: "test", uid: "1234"});
-        tracker = va.init({code: "test"})
-    }
-
-
-    function testClick() {
-        console.log("click")
-        tracker.sendEvent("click", {
-            name: "testclick",
-            web_host: "test_webhost",
-            test_data: "test",
-            os: "fake_os"
-        }, err => {
-            console.log("send testClick failed: ", err);
-        })
-
-    }
-
-    function productClick() {
-        console.log("product click")
-        tracker.sendEvent("product_click", {
-            name: "testProductClick",
-            queryId: "123",
-            pid: "pid",
-            pos: 1,
-            imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"
-        }, err => {
-            console.log("send testProductClick failed")
-        })
-    }
-
-    function testSearch() {
-        console.log("test search event");
-
-        tracker.sendEvent("search", {
-            name: "testSearch",
-            // queryId: "123"
-        }, err => {
-            console.log("send test search failed")
-        })
-    }
-
-    function testCreateView() {
-        console.log("test create view");
-        tracker.sendEvent("view", {
-            name: "testView"
-        }, err => {
-            console.log("send test view failed")
-        })
-    }
+    <script>
+        var tracker;
+        function myfunction() {
+            tracker = va.init({ code: "YOUR_TRACKER_CODE" })
+        }
 
 
-    function testAddCart() {
-        console.log("test add cart");
-        tracker.sendEvent("add_to_cart", {
-            name: "testAddCart",
-            queryId: "123",
-            pid: "pid",
-            imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg",
-            pos: 2
-        }, err => {
-            console.log("send add cart failed")
-        })
-    }
+        function testClick() {
+            console.log("click")
+            tracker.sendEvent("click", {
+                name: "testclick",
+                web_host: "test_webhost",
+                test_data: "test",
+                os: "fake_os"
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send testClick failed: ", err);
+            })
 
-    function testTransaction() {
-        console.log("test transaction");
-        tracker.sendEvent("transaction", {
-            name: "testTransaction",
-            queryId: "124",
-            transId: "3333",
-            value: 24.5
-        }, err => {
-            console.log("send transaction failed")
-        })
-    }
+        }
 
-</script>
+        function productClick() {
+            console.log("product click")
+            tracker.sendEvent("product_click", {
+                name: "testProductClick",
+                queryId: "123",
+                pid: "pid",
+                pos: 1,
+                imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg"
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send testProductClick failed")
+            })
+        }
+
+        function testSearch() {
+            console.log("test search event");
+
+            tracker.sendEvent("search", {
+                name: "testSearch",
+                // queryId: "123"
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send test search failed")
+            })
+        }
+
+        function testCreateView() {
+            console.log("test create view");
+            tracker.sendEvent("view", {
+                name: "testView"
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send test view failed")
+            })
+        }
+
+
+        function testAddCart() {
+            console.log("test add cart");
+            tracker.sendEvent("add_to_cart", {
+                name: "testAddCart",
+                queryId: "123",
+                pid: "pid",
+                imUrl: "https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg",
+                pos: 2
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send add cart failed")
+            })
+        }
+
+        function testTransaction() {
+            console.log("test transaction");
+            tracker.sendEvent("transaction", {
+                name: "testTransaction",
+                queryId: "124",
+                transId: "3333",
+                value: 24.5
+            }, success => {
+                console.log(success);
+            }, err => {
+                console.log("send transaction failed")
+            })
+        }
+
+    </script>
 
 </body>
+
 </html>

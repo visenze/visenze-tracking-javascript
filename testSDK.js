@@ -9,6 +9,8 @@ tracker.sendEvent("click", {
   web_host: "test_webhost",
   test_data: "test",
   os: "fake_os"
+}, success => {
+  console.log(success);
 }, err => {
-  console.log("send testClick failed: ", err);
+  console.error("send testClick failed: ", err);
 });

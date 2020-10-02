@@ -58,7 +58,7 @@ const sendRequest = (fetchObj, path, callback, failure) => {
         .then(res => {
             if (res === "success") {
                 if (callback) {
-                    callback("send success")
+                    callback("send success");
                 }
             } else {
                 if (failure) {
@@ -98,12 +98,12 @@ class Tracker {
         }
     }
 
-    sendEvent(action, dataObj, callback) {
+    sendEvent(action, dataObj, successCallback, failCallback) {
         const path = `${this.baseUrl}/__va.gif`;
 
         let defaultParams = this.getDefaultParams(action);
         let params = this.dataCollection.addData(defaultParams, dataObj);
-        sendGetRequest(path, params, null, callback);
+        sendGetRequest(path, params, successCallback, failCallback);
     }
 
     getDefaultParams(action) {
