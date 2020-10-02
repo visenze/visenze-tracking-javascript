@@ -1,7 +1,7 @@
 const va = require('./tracking/index');
 
 // TODO: insert your tracking code here
-tracker = va.init({ code: "test" })
+tracker = va.init({ code: "YOUR_TRACKER_CODE" })
 
 // test click event
 tracker.sendEvent("click", {
