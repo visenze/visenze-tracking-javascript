@@ -1,6 +1,6 @@
 {
   "name": "visenze-tracking-javascript",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "visenze track javascript sdk for users to send user defined data tracking event to visenze for performance monitoring and analytic purpose",
   "main": "./tracking/index.js",
   "directories": {
