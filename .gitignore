@@ -42,6 +42,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+# npm repo credentials
+.npmrc
+
 # Optional eslint cache
 .eslintcache
 
@@ -63,6 +66,9 @@ typings/
 # Idea files
 .idea/
 
-# Image Search dist folder
-ImageSearch/dist
+# Tracking dist folder
+tracking/dist
 /dist
+
+# AWS profile
+aws-profile.json
