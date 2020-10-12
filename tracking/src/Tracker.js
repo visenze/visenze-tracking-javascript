@@ -58,7 +58,7 @@ const sendRequest = (fetchObj, path, callback, failure) => {
         .then(res => {
             if (res === "success") {
                 if (callback) {
-                    callback("send success");
+                    callback(`${path} send success`);
                 }
             } else {
                 if (failure) {

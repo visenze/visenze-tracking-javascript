@@ -1,7 +1,8 @@
 const va = require('./tracking/index');
 
 // TODO: insert your tracking code here
-tracker = va.init({ code: "YOUR_TRACKER_CODE" })
+const isCN = false // flag to send event to CN endpoint
+const tracker = va.init({ code: "YOUR_TRACKER_CODE", isCN: isCN })
 
 // test click event
 tracker.sendEvent("click", {
