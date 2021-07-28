@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
 const versions = {
-    tracking: '1.0.2'
+    tracking: '1.0.9'
 };
 
 const config = (directory) => {
