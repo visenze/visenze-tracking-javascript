@@ -10,6 +10,7 @@ module.exports = {
         let code = obj.code; 
         let uid = obj.uid; 
         let isCN = obj.isCN; 
+        let endpoint = obj.endpoint;
 
         if(this.dataCollection === undefined) {
             this.dataCollection = new DataCollection(); 
@@ -21,7 +22,7 @@ module.exports = {
             this.sessionManager.setUid(uid); 
         }
 
-        return new Tracker(this.dataCollection, this.sessionManager, code, isCN)
+        return new Tracker(this.dataCollection, this.sessionManager, code, isCN, endpoint)
         
     }
 
