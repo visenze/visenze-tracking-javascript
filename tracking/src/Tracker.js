@@ -86,12 +86,14 @@ const sendGetRequest = (path, params, callback, failure) => {
 
 
 class Tracker {
-    constructor(dataCollection, sessionManager, code, isCN = false) {
+    constructor(dataCollection, sessionManager, code, isCN = false, endpoint) {
         this.code = code;
         this.dataCollection = dataCollection;
         this.sessionManager = sessionManager;
 
-        if (isCN) {
+        if (endpoint) {
+            this.baseUrl = endpoint;
+        } else if (isCN) {
             this.baseUrl = BASE_URL_CN;
         } else {
             this.baseUrl = BASE_URL;
