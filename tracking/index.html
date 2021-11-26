@@ -30,6 +30,21 @@
     <div class="container">
         <p>visenze tracking demo</p>
 
+        <p>
+            uid: <span id="uid"></span>
+            <br />
+            sid: <span id="sid"></span>
+            <br />
+            session time remaining: <span id="sessionTimeRemaining"></span>
+        </p>
+
+        <p>
+            new uid: <input id="newUidText" />
+            <button onclick="testSetUID()">replace</button>
+        </p>
+
+        <button onclick="testResetSession()">reset session</button>
+
         <button onclick="testClick()">test click</button>
 
         <button onclick="productClick()">Product click</button>
@@ -48,12 +63,35 @@
         function myfunction() {
             // TODO: insert your tracker code here
             const isCN = false // flag to send event to CN endpoint
-            const tracker = va.init({ code: "YOUR_TRACKER_CODE", isCN: isCN })
+            tracker = va.init({ code: "YOUR_TRACKER_CODE", isCN: isCN })
+
+            document.getElementById("uid").textContent = tracker.getUID();
         }
+
+        function testSetUID() {
+            console.log("new uid");
+            tracker.setUID(document.getElementById("newUidText").value);
+            document.getElementById("newUidText").value = "";
+
+            document.getElementById("uid").textContent = tracker.getUID();
+        }
+
+        function testResetSession() {
+            console.log("reset session");
+            const newSid = tracker.resetSession();
+            console.log("new session id", newSid);
+
+            document.getElementById("sid").textContent = tracker.getSID();
+        }
+
+        setInterval(() => {
+            document.getElementById("sid").textContent = tracker.getSID();
+            document.getElementById("sessionTimeRemaining").textContent = tracker.getSessionTimeRemaining()
+        }, 1000);
 
 
         function testClick() {
-            console.log("click")
+            console.log("click");
             tracker.sendEvent("click", {
                 name: "testclick",
                 web_host: "test_webhost",
@@ -68,7 +106,7 @@
         }
 
         function productClick() {
-            console.log("product click")
+            console.log("product click");
             tracker.sendEvent("product_click", {
                 name: "testProductClick",
                 queryId: "123",
@@ -87,7 +125,7 @@
 
             tracker.sendEvent("search", {
                 name: "testSearch",
-                // queryId: "123"
+                queryId: "123"
             }, success => {
                 console.log(success);
             }, err => {

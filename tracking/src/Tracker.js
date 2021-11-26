@@ -100,6 +100,26 @@ class Tracker {
         }
     }
 
+    getUID() {
+        return this.sessionManager.getUID();
+    }
+
+    setUID(uid) {
+        return this.sessionManager.setUID(uid);
+    }
+
+    getSID() {
+        return this.sessionManager.getSID();
+    }
+
+    resetSession() {
+        return this.sessionManager.resetSession();
+    }
+
+    getSessionTimeRemaining() {
+        return this.sessionManager.getSessionTimeRemaining();
+    }
+
     sendEvent(action, dataObj, successCallback, failCallback) {
         const path = `${this.baseUrl}/__va.gif`;
 
@@ -121,4 +141,4 @@ class Tracker {
     }
 }
 
-module.exports = Tracker; 
+module.exports = Tracker;

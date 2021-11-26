@@ -3,16 +3,14 @@ const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
-const versions = {
-    tracking: '1.0.9'
-};
+const { version } = require('./package.json');
 
 const config = (directory) => {
     return {
         entry: path.resolve(directory, 'index.js'),
         output: {
             path: path.resolve(directory, 'dist'),
-            filename: `${directory.toLowerCase()}.${versions[directory]}.js`,
+            filename: `${directory.toLowerCase()}.${version}.js`,
             publicPath: '/',
         },
         mode: 'production',
