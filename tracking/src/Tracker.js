@@ -3,7 +3,7 @@ const URI = require('jsuri');
 const pjson = require('../../package.json')
 const BASE_URL = "https://analytics.data.visenze.com/v3";
 const BASE_URL_CN = "https://analytics.visenze.com.cn/v3";
-const SDK = "javascript sdk";
+const SDK = "tracking js sdk";
 const SDK_VERSION = pjson.version;
 const TIMEOUT = 15000;
 
@@ -100,6 +100,26 @@ class Tracker {
         }
     }
 
+    getUID() {
+        return this.sessionManager.getUID();
+    }
+
+    setUID(uid) {
+        return this.sessionManager.setUID(uid);
+    }
+
+    getSID() {
+        return this.sessionManager.getSID();
+    }
+
+    resetSession() {
+        return this.sessionManager.resetSession();
+    }
+
+    getSessionTimeRemaining() {
+        return this.sessionManager.getSessionTimeRemaining();
+    }
+
     sendEvent(action, dataObj, successCallback, failCallback) {
         const path = `${this.baseUrl}/__va.gif`;
 
@@ -121,4 +141,4 @@ class Tracker {
     }
 }
 
-module.exports = Tracker; 
+module.exports = Tracker;

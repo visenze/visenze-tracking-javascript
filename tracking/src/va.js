@@ -4,26 +4,26 @@ const Tracker = require("./Tracker.js");
 
 
 module.exports = {
-    
 
-    init: function(obj) {
-        let code = obj.code; 
-        let uid = obj.uid; 
-        let isCN = obj.isCN; 
+
+    init: function (obj) {
+        let code = obj.code;
+        let uid = obj.uid;
+        let isCN = obj.isCN;
         let endpoint = obj.endpoint;
 
-        if(this.dataCollection === undefined) {
-            this.dataCollection = new DataCollection(); 
+        if (this.dataCollection === undefined) {
+            this.dataCollection = new DataCollection();
         }
 
-        if(this.sessionManager === undefined) {
-            this.sessionManager = new SessionManager(uid); 
+        if (this.sessionManager === undefined) {
+            this.sessionManager = new SessionManager(uid);
         } else {
-            this.sessionManager.setUid(uid); 
+            this.sessionManager.setUID(uid);
         }
 
         return new Tracker(this.dataCollection, this.sessionManager, code, isCN, endpoint)
-        
+
     }
 
 }
