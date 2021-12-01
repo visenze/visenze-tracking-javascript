@@ -3,7 +3,7 @@ const URI = require('jsuri');
 const pjson = require('../../package.json')
 const BASE_URL = "https://analytics.data.visenze.com/v3";
 const BASE_URL_CN = "https://analytics.visenze.com.cn/v3";
-const SDK = "javascript sdk";
+const SDK = "tracking js sdk";
 const SDK_VERSION = pjson.version;
 const TIMEOUT = 15000;
 
