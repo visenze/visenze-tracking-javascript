@@ -120,12 +120,46 @@ class Tracker {
         return this.sessionManager.getSessionTimeRemaining();
     }
 
-    sendEvent(action, dataObj, successCallback, failCallback) {
+    generateUUID() {
+        return this.sessionManager.generateUUID();
+    }
+
+    sendEvent(action, event, successCallback = () => { }, failCallback = () => { }) {
         const path = `${this.baseUrl}/__va.gif`;
 
         let defaultParams = this.getDefaultParams(action);
-        let params = this.dataCollection.addData(defaultParams, dataObj);
+        let params = this.dataCollection.addData(defaultParams, event);
         sendGetRequest(path, params, successCallback, failCallback);
+    }
+
+    sendEvents(action, events, successCallback = () => { }, failCallback = () => { }) {
+        if (!this.validateEvents(events, failCallback)) {
+            return;
+        }
+
+        const batchId = this.sessionManager.generateUUID();
+
+        events.forEach(event => {
+            if (action.toLowerCase() === 'transaction' && !event.transId) {
+                event.transId = batchId;
+            }
+
+            this.sendEvent(action, event, successCallback, failCallback);
+        });
+    }
+
+    validateEvents(events, failCallback) {
+        if (!Array.isArray(events)) {
+            failCallback(Error('events must be an array'));
+            return false;
+        }
+
+        if (events.length <= 0) {
+            failCallback(Error('events must have at least 1 item'));
+            return false;
+        }
+
+        return true;
     }
 
     getDefaultParams(action) {

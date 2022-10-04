@@ -1,3 +1,5 @@
+.idea/
+
 tracking/index.html
 tracking/index-dev.js
 tracking/dist/
@@ -7,6 +9,10 @@ dist/
 .codeclimate.yml
 .eslintrc.js
 aws-profile.json
+.babelrc
+
+test/
+*.test.js
 
 testSDK.js
 webpack.dev.js
