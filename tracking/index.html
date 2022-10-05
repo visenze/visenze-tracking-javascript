@@ -56,6 +56,10 @@
         <button onclick="testAddCart()">test add cart</button>
 
         <button onclick="testTransaction()">test transaction </button>
+
+        <button onclick="testTransactions()">test transactions </button>
+
+        <button onclick="testCustomEvents()">test custom events </button>
     </div>
 
     <script>
@@ -174,6 +178,50 @@
             });
         }
 
+
+        function testTransactions() {
+            console.log("test transactions");
+            tracker.sendEvents("transaction", [{
+                name: "testTransactions",
+                queryId: "124",
+                transId: "3333",
+                value: 24.5
+            },
+            {
+                name: "t1",
+                queryId: "124",
+                value: 67.8
+            },
+            {
+                name: "t2",
+                queryId: "124",
+                value: 12.3
+            }], success => {
+                console.log(success);
+            }, err => {
+                console.error("send transaction failed");
+            });
+        }
+
+        function testCustomEvents() {
+            console.log("test custom events");
+            tracker.sendEvents("custom_event", [{
+                name: "c1",
+                queryId: "124",
+            },
+            {
+                name: "c2",
+                queryId: "124"
+            },
+            {
+                name: "c3",
+                queryId: "124"
+            }], success => {
+                console.log(success);
+            }, err => {
+                console.error("send transaction failed");
+            });
+        }
     </script>
 
 </body>
