@@ -5,25 +5,27 @@ class DataCollection {
 
     addData(defaultParams, userInput) {
 
-        defaultParams.lang = this.getLanguage();
-        defaultParams.sr = this.getScreenResolution();
-        defaultParams.url = typeof window !== 'undefined' ? window.location.href : null;
-        defaultParams.r = typeof document !== 'undefined' ? document.referrer : null;
-        // override/remove user input for the following fields.
-        defaultParams.db = null;
-        defaultParams.dm = null;
-        defaultParams.os = null;
-        defaultParams.osv = null;
-        defaultParams.p = null;
-        defaultParams.web_host = null;
+        userInput.lang = this.getLanguage();
+        userInput.sr = this.getScreenResolution();
+        userInput.url = typeof window !== 'undefined' ? window.location.href : null;
+        userInput.r = typeof document !== 'undefined' ? document.referrer : null;
 
-        return Object.assign(userInput, defaultParams);
+        // override/remove user input for the following fields.
+        userInput.db = null;
+        userInput.dm = null;
+        userInput.os = null;
+        userInput.osv = null;
+        userInput.p = null;
+        userInput.web_host = null;
+
+        // user input should override default params
+        return Object.assign(defaultParams, userInput);
     }
 
 
     getLanguage() {
         if (typeof navigator !== 'undefined') {
-            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || options.NOT_AVAILABLE
+            return navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || NOT_AVAILABLE
         }
         return null;
     }
