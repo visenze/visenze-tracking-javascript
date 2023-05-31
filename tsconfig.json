@@ -11,6 +11,8 @@
     "strict": true,
     "noImplicitAny": false,
     "target": "ES6",
-    "stripInternal": true
+    "stripInternal": true,
+    "typeRoots": ["./types"],
+    "lib": ["es2018", "dom", "esnext"]
   }
 }

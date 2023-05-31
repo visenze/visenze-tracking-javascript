@@ -3,6 +3,7 @@ import URI from 'jsuri';
 import SessionManager from './session-manager';
 import { addData } from './data-collection';
 import { version } from './version';
+import { ViSenzeAnalytics } from '../types/shared';
 
 const BASE_URL = 'https://analytics.data.visenze.com/v3';
 const BASE_URL_CN = 'https://analytics.visenze.com.cn/v3';
@@ -83,28 +84,7 @@ export default function Tracker(configs: {
   uid?: string;
   isCN?: boolean;
   endpoint?: string;
-}): {
-  getUID(): string;
-  setUID(uid: string): void;
-  getSID(): string;
-  resetSession(): string;
-  getSessionTimeRemaining(): number;
-  generateUUID(): string;
-  validateEvents(events: unknown, failCallback?: (Error) => void): boolean;
-  sendEvent(
-    action: any,
-    event: any,
-    successCallback: () => void,
-    failCallback: (err: any) => void
-  ): void;
-  sendEvents(
-    action: any,
-    events: any,
-    successCallback: () => void,
-    failCallback: (err: any) => void
-  ): void;
-  getDefaultParams(action: string): Record<string, unknown>;
-} {
+}): ViSenzeAnalytics {
   const code = configs.code;
   const sessionManager = SessionManager(configs.uid);
   const isCN = !!configs.isCN;
