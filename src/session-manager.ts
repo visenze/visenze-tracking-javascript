@@ -22,12 +22,18 @@ export default function SessionManager(
     uid = user_uid;
   }
 
+  /**
+   * @internal
+   */
   const _setLocalStorage = (key: string, val: string): void => {
     if (typeof Storage !== 'undefined') {
       localStorage.setItem(key, val);
     }
   };
 
+  /**
+   * @internal
+   */
   const _getLocalStorage = (key: string): string | null => {
     if (typeof Storage !== 'undefined') {
       return localStorage.getItem(key);
@@ -35,6 +41,9 @@ export default function SessionManager(
     return null;
   };
 
+  /**
+   * @internal
+   */
   const _removeLocalStorage = (key: string): void => {
     if (typeof Storage !== 'undefined') {
       localStorage.removeItem(key);

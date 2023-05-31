@@ -90,6 +90,7 @@ export default function Tracker(configs: {
   resetSession(): string;
   getSessionTimeRemaining(): number;
   generateUUID(): string;
+  validateEvents(events: unknown, failCallback?: (Error) => void): boolean;
   sendEvent(
     action: any,
     event: any,
@@ -118,26 +119,6 @@ export default function Tracker(configs: {
     baseUrl = BASE_URL;
   }
 
-  /**
-   * @internal
-   */
-  const validateEvents = (
-    events: unknown,
-    failCallback?: (Error) => void
-  ): boolean => {
-    if (!Array.isArray(events)) {
-      failCallback?.(Error('events must be an array'));
-      return false;
-    }
-
-    if (events.length <= 0) {
-      failCallback?.(Error('events must have at least 1 item'));
-      return false;
-    }
-
-    return true;
-  };
-
   return {
     getUID(): string {
       return sessionManager.getUID();
@@ -157,6 +138,19 @@ export default function Tracker(configs: {
     generateUUID(): string {
       return sessionManager.generateUUID();
     },
+    validateEvents(events: unknown, failCallback?: (Error) => void): boolean {
+      if (!Array.isArray(events)) {
+        failCallback?.(Error('events must be an array'));
+        return false;
+      }
+
+      if (events.length <= 0) {
+        failCallback?.(Error('events must have at least 1 item'));
+        return false;
+      }
+
+      return true;
+    },
     sendEvent(
       action: string,
       event: Record<string, unknown>,
@@ -175,7 +169,7 @@ export default function Tracker(configs: {
       successCallback: () => void,
       failCallback: (err: any) => void
     ): void {
-      if (!validateEvents(events, failCallback)) {
+      if (!this.validateEvents(events, failCallback)) {
         return;
       }
       const batchId = sessionManager.generateUUID();
@@ -186,7 +180,7 @@ export default function Tracker(configs: {
         this.sendEvent(action, event, successCallback, failCallback);
       });
     },
-    getDefaultParams(action: string): Record<string, unknown> {
+    getDefaultParams(action?: string): Record<string, unknown> {
       const defaultParams: Record<string, unknown> = {};
       defaultParams.code = code;
       defaultParams.sid = sessionManager.getSessionId();
