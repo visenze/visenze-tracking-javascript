@@ -70,7 +70,7 @@
       function myfunction() {
         // TODO: insert your tracker code here
         const isCN = false; // flag to send event to CN endpoint
-        tracker = va.init({ code: 'YOUR_TRACKER_CODE', isCN: isCN });
+        tracker = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE', isCN: isCN });
 
         document.getElementById('uid').textContent = tracker.getUID();
       }

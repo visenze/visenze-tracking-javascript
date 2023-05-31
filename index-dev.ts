@@ -1,7 +1,7 @@
 import va from './src/tracker';
 
 (function (window): void {
-  if (typeof window.va === 'undefined') {
-    window.va = va;
+  if (typeof window.ViSenzeAnalytics === 'undefined') {
+    window.ViSenzeAnalytics = va;
   }
 })(window);

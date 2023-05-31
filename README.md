@@ -46,10 +46,10 @@ npm install visenze-tracking-javascript
 
 ```js
 // Import module
-import VisenzeTracker from 'visenze-tracking-javascript';
+import ViSenzeAnalytics from 'visenze-tracking-javascript';
 
 // Initialize
-const tracker = VisenzeTracker({ code: 'YOUR_TRACKER_CODE' });
+const vaClient = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE' });
 ```
 
 ### 2.1 Run the Demo

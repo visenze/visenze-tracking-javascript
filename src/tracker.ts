@@ -13,7 +13,7 @@ const TIMEOUT = 15000;
 /**
  * @internal
  */
-function timeout(ms: number, promise: Promise<unknown>): Promise<unknown> {
+function _timeout(ms: number, promise: Promise<unknown>): Promise<unknown> {
   const to = new Promise((_, reject) =>
     setTimeout(() => reject(Error(`Timed out in ${ms} ms`)), ms)
   );
@@ -23,13 +23,13 @@ function timeout(ms: number, promise: Promise<unknown>): Promise<unknown> {
 /**
  * @internal
  */
-const sendRequest = (
+const _sendRequest = (
   fetchObj: Promise<Response>,
   path: string,
   callback?: () => void,
   failure?: (errResoonse: any) => void
 ): Promise<void> => {
-  return timeout(TIMEOUT, fetchObj)
+  return _timeout(TIMEOUT, fetchObj)
     .then((response: any) => {
       const status = response.status;
       if (status === 200) {
@@ -60,7 +60,7 @@ const sendRequest = (
 /**
  * @internal
  */
-const sendGetRequest = (
+const _sendGetRequest = (
   path: string,
   params: Record<string, unknown>,
   callback?: () => void,
@@ -75,7 +75,7 @@ const sendGetRequest = (
     method: 'GET',
   });
 
-  return sendRequest(fetchObj, path, callback, failure);
+  return _sendRequest(fetchObj, path, callback, failure);
 };
 
 export default function Tracker(configs: {
@@ -167,7 +167,7 @@ export default function Tracker(configs: {
 
       const defaultParams = this.getDefaultParams(action);
       const params = addData(defaultParams, event);
-      sendGetRequest(path, params, successCallback, failCallback);
+      _sendGetRequest(path, params, successCallback, failCallback);
     },
     sendEvents(
       action: string,

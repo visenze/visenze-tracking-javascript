@@ -2,6 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
 const pjson = require('./package.json');
 const version = pjson.version;
