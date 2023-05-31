@@ -1,0 +1,16 @@
+{
+  "include": ["src/**/*", "./index.ts"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "lib",
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "target": "ES6",
+    "stripInternal": true
+  }
+}

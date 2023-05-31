@@ -4,7 +4,7 @@
 
 JavaScript SDK for ViSenze Analytics
 
-----
+---
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ JavaScript SDK for ViSenze Analytics
   - [2. Setup and initialization](#2-setup-and-initialization)
     - [2.1 Run the Demo](#21-run-the-demo)
 
-----
+---
 
 ## 1. Overview
 
@@ -46,10 +46,10 @@ npm install visenze-tracking-javascript
 
 ```js
 // Import module
-const va = require('visenze-tracking-javascript');
+import VisenzeTracker from 'visenze-tracking-javascript';
 
 // Initialize
- tracker = va.init({ code: 'YOUR_TRACKER_CODE'});
+const tracker = VisenzeTracker({ code: 'YOUR_TRACKER_CODE' });
 ```
 
 ### 2.1 Run the Demo
