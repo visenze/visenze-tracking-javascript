@@ -1,6 +1,6 @@
 {
   "name": "visenze-tracking-javascript",
-  "version": "2.0.0-dev.2",
+  "version": "2.0.0-dev.4",
   "description": "visenze track javascript sdk for users to send user defined data tracking event to visenze for performance monitoring and analytic purpose",
   "main": "lib/index.ts",
   "types": "lib/index.d.ts",

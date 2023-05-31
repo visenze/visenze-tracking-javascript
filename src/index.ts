@@ -1,4 +1,4 @@
-import va from './src/tracker';
+import va from './tracker';
 
 (function init(context): void {
   if (typeof window === 'undefined' && context && !context.ViSenzeAnalytics) {

@@ -7,6 +7,8 @@ dist/
 *.tgz
 .codeclimate.yml
 .eslintrc.js
+.eslintignore
+tsconfig.json
 aws-profile.json
 babel.config.json
 .vscode
