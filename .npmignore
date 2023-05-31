@@ -16,7 +16,6 @@ test/
 *.test.js
 src/
 index.ts
-index-dev.ts
 
 testSDK.js
 webpack.dev.js
