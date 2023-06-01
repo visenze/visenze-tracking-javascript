@@ -11,8 +11,8 @@ const s3plugin = new S3Plugin({
   // Only upload js
   include: /.*\.(js)/,
   s3Options: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID, //process.env.AWS_ACCESS_KEY_ID
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, //process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'ap-southeast-1',
   },
   s3UploadOptions: {
