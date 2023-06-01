@@ -3,10 +3,10 @@
   "version": "2.0.0",
   "description": "visenze track javascript sdk for users to send user defined data tracking event to visenze for performance monitoring and analytic purpose",
   "main": "cjs/index.js",
-  "module": "es6/index.js",
+  "module": "esm/index.js",
   "exports": {
     ".": {
-      "import": "./es6/index.js",
+      "import": "./esm/index.js",
       "require": "./cjs/index.js",
       "default": "./cjs/index.js"
     }
@@ -14,9 +14,9 @@
   "scripts": {
     "start": "webpack-dev-server --env tracking --config webpack.dev.js",
     "build-js": "webpack --config webpack.prod.js",
-    "build-pkg": "npm run write-version && npm run build-cjs && npm run build-es6 && ./fixup",
+    "build-pkg": "npm run write-version && npm run build-cjs && npm run build-esm && ./fixup",
     "build-cjs": "rm -fr cjs/* && tsc -p tsconfig.cjs.json",
-    "build-es6": "rm -fr es6/* && tsc -p tsconfig.json",
+    "build-esm": "rm -fr esm/* && tsc -p tsconfig.json",
     "test": "jest",
     "write-version": "node -p \"'export const version =  \\'' + require('./package.json').version + '\\';'\" > src/version.ts",
     "lint": "eslint . --ext .ts"

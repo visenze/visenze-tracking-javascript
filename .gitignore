@@ -72,7 +72,7 @@ typings/
 # Tracking dist folder
 /dist
 /lib
-/es6
+/esm
 /cjs
 
 # AWS profile

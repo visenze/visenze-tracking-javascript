@@ -4,7 +4,7 @@ cat >cjs/package.json <<!EOF
 }
 !EOF
 
-cat >es6/package.json <<!EOF
+cat >esm/package.json <<!EOF
 {
     "type": "module"
 }
