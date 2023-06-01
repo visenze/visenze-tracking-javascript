@@ -1,11 +1,11 @@
-export interface ViSenzeAnalytics {
+export interface VAClient {
   getUID(): string;
   setUID(uid: string): void;
   getSID(): string;
   resetSession(): string;
   getSessionTimeRemaining(): number;
   generateUUID(): string;
-  validateEvents(events: unknown, failCallback?: (Error) => void): boolean;
+  validateEvents(events: unknown, failCallback?: (err: Error) => void): boolean;
   sendEvent(
     action: any,
     event: any,
@@ -28,6 +28,6 @@ declare global {
       uid?: string;
       isCN?: boolean;
       endpoint?: string;
-    }) => ViSenzeAnalytics;
+    }) => VAClient;
   }
 }

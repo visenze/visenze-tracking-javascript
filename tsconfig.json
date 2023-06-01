@@ -1,18 +1,8 @@
 {
-  "include": ["src/**/*", "types/**/*"],
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "declaration": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "outDir": "lib",
-    "resolveJsonModule": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "target": "ES6",
-    "stripInternal": true,
-    "typeRoots": ["./types"],
-    "lib": ["es2018", "dom", "esnext"]
+    "module": "esnext",
+    "outDir": "es6",
+    "target": "es6"
   }
 }

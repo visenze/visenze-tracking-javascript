@@ -3,7 +3,7 @@ import URI from 'jsuri';
 import SessionManager from './session-manager';
 import { addData } from './data-collection';
 import { version } from './version';
-import { ViSenzeAnalytics } from '../types/shared';
+import { VAClient } from '../types/shared';
 
 const BASE_URL = 'https://analytics.data.visenze.com/v3';
 const BASE_URL_CN = 'https://analytics.visenze.com.cn/v3';
@@ -84,7 +84,7 @@ export default function Tracker(configs: {
   uid?: string;
   isCN?: boolean;
   endpoint?: string;
-}): ViSenzeAnalytics {
+}): VAClient {
   const code = configs.code;
   const sessionManager = SessionManager(configs.uid);
   const isCN = !!configs.isCN;
@@ -118,7 +118,10 @@ export default function Tracker(configs: {
     generateUUID(): string {
       return sessionManager.generateUUID();
     },
-    validateEvents(events: unknown, failCallback?: (Error) => void): boolean {
+    validateEvents(
+      events: unknown,
+      failCallback?: (err: Error) => void
+    ): boolean {
       if (!Array.isArray(events)) {
         failCallback?.(Error('events must be an array'));
         return false;

@@ -72,6 +72,8 @@ typings/
 # Tracking dist folder
 /dist
 /lib
+/es6
+/cjs
 
 # AWS profile
 aws-profile.json

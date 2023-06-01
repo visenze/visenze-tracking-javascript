@@ -1,26 +1,29 @@
 {
   "name": "visenze-tracking-javascript",
-  "version": "2.0.0-dev.5",
+  "version": "2.0.0",
   "description": "visenze track javascript sdk for users to send user defined data tracking event to visenze for performance monitoring and analytic purpose",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "es6/index.js",
+  "exports": {
+    ".": {
+      "import": "./es6/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.js"
+    }
+  },
   "scripts": {
     "start": "webpack-dev-server --env tracking --config webpack.dev.js",
-    "build-prod": "webpack --config webpack.prod.js",
+    "build-js": "webpack --config webpack.prod.js",
+    "build-pkg": "npm run write-version && npm run build-cjs && npm run build-es6 && ./fixup",
+    "build-cjs": "rm -fr cjs/* && tsc -p tsconfig.cjs.json",
+    "build-es6": "rm -fr es6/* && tsc -p tsconfig.json",
     "test": "jest",
     "write-version": "node -p \"'export const version =  \\'' + require('./package.json').version + '\\';'\" > src/version.ts",
-    "get-version": "echo $npm_package_version",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/visenze/visenze-tracking-javascript.git"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "globals": {
-      "window": {}
-    }
   },
   "keywords": [
     "visenze",
@@ -46,7 +49,7 @@
     "html-webpack-plugin": "^5.5.1",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.1.1",
-    "terser-webpack-pluginb": "^5.3.9",
+    "terser-webpack-plugin": "^5.3.9",
     "typescript": "^5.0.4",
     "webpack": "^5.82.1",
     "webpack-cli": "^5.1.1",
