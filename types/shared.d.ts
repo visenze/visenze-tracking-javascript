@@ -7,16 +7,16 @@ export interface VAClient {
   generateUUID(): string;
   validateEvents(events: unknown, failCallback?: (err: Error) => void): boolean;
   sendEvent(
-    action: any,
-    event: any,
+    action: string,
+    eventParams: Record<string, unknown>,
     successCallback: () => void,
-    failCallback: (err: any) => void
+    failCallback: (err: Response) => void
   ): void;
   sendEvents(
-    action: any,
-    events: any,
+    action: string,
+    eventParamsList: Record<string, unknown>[],
     successCallback: () => void,
-    failCallback: (err: any) => void
+    failCallback: (err: Response) => void
   ): void;
   getDefaultParams(action?: string): Record<string, unknown>;
 }

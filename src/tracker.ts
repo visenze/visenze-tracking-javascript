@@ -28,15 +28,15 @@ const _sendRequest = (
   fetchObj: Promise<Response>,
   path: string,
   callback?: () => void,
-  failure?: (errResoonse: any) => void
+  failure?: (errResponse: Response) => void
 ): Promise<void> => {
   return _timeout(TIMEOUT, fetchObj)
-    .then((response: any) => {
+    .then((response: Response) => {
       const status = response.status;
       if (status === 200) {
         return 'success';
       } else {
-        const res: unknown = (response as Response).json();
+        const res: unknown = response.json();
         return res;
       }
     })
@@ -65,7 +65,7 @@ const _sendGetRequest = (
   path: string,
   params: Record<string, unknown>,
   callback?: () => void,
-  failure?: (errResoonse: any) => void
+  failure?: (errResponse: Response) => void
 ): Promise<void> => {
   const uri = new URI(path);
   Object.entries(params).forEach(([key, value]) => {
@@ -138,7 +138,7 @@ export default function Tracker(configs: {
       action: string,
       event: Record<string, unknown>,
       successCallback: () => void,
-      failCallback: (err: any) => void
+      failCallback: (err: Response) => void
     ): void {
       const path = `${baseUrl}/__va.gif`;
 
@@ -150,7 +150,7 @@ export default function Tracker(configs: {
       action: string,
       events: Record<string, unknown>[],
       successCallback: () => void,
-      failCallback: (err: any) => void
+      failCallback: (err: Response) => void
     ): void {
       if (!this.validateEvents(events, failCallback)) {
         return;
