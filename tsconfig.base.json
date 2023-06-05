@@ -8,6 +8,7 @@
     "resolveJsonModule": true,
     "strict": true,
     "stripInternal": true,
+    "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./types"],
     "lib": ["es2018", "dom", "esnext"]
   }

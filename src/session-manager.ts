@@ -54,11 +54,7 @@ export default function SessionManager(
     isSameDay(t1: number, t2: number): boolean {
       const d1 = new Date(t1);
       const d2 = new Date(t2);
-      return (
-        d1.getFullYear() === d2.getFullYear() &&
-        d1.getMonth() === d2.getMonth() &&
-        d1.getDate() === d2.getDate()
-      );
+      return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     },
     setUID(uid: string | null): void {
       if (uid) {
@@ -96,14 +92,11 @@ export default function SessionManager(
     },
     generateUUID(): string {
       let d = new Date().getTime();
-      const uuid = 'xxxxxxxx.xxxx.4xxx.yxxx.xxxxxxxxxxxx'.replace(
-        /[xy]/g,
-        (c) => {
-          const r = (d + Math.random() * 16) % 16 | 0;
-          d = Math.floor(d / 16);
-          return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
-        }
-      );
+      const uuid = 'xxxxxxxx.xxxx.4xxx.yxxx.xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      });
       return uuid;
     },
     // if sid is not created yet, then create a new sid and store in local storage
@@ -112,11 +105,7 @@ export default function SessionManager(
       let sid = _getLocalStorage(KEY_SID);
       const sessionTimestamp = this.getSessionTimestamp();
 
-      if (
-        !sid ||
-        now - sessionTimestamp > SESSION_TIMEOUT ||
-        !this.isSameDay(now, sessionTimestamp)
-      ) {
+      if (!sid || now - sessionTimestamp > SESSION_TIMEOUT || !this.isSameDay(now, sessionTimestamp)) {
         sid = this.generateUUID();
         _setLocalStorage(KEY_SID, sid);
       }
@@ -138,10 +127,7 @@ export default function SessionManager(
       }
 
       const timestamp = parseInt(sessionTimestamp);
-      if (
-        !this.isSameDay(now, timestamp) ||
-        now - timestamp > SESSION_TIMEOUT
-      ) {
+      if (!this.isSameDay(now, timestamp) || now - timestamp > SESSION_TIMEOUT) {
         return 0;
       }
 

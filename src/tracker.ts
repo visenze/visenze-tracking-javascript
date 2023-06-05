@@ -1,8 +1,8 @@
 import fetch, { Response } from 'node-fetch';
 import URI from 'jsuri';
-import SessionManager from './session-manager';
-import { addData } from './data-collection';
-import { version } from './version';
+import SessionManager from './session-manager.js';
+import { addData } from './data-collection.js';
+import { version } from './version.js';
 import { VAClient } from '../types/shared';
 
 const BASE_URL = 'https://analytics.data.visenze.com/v3';
