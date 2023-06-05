@@ -10,13 +10,13 @@ export interface VAClient {
     action: string,
     eventParams: Record<string, unknown>,
     successCallback: () => void,
-    failCallback: (err: Response) => void
+    failCallback: (err: unknown) => void
   ): void;
   sendEvents(
     action: string,
     eventParamsList: Record<string, unknown>[],
     successCallback: () => void,
-    failCallback: (err: Response) => void
+    failCallback: (err: unknown) => void
   ): void;
   getDefaultParams(action?: string): Record<string, unknown>;
 }
