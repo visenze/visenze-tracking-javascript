@@ -61,7 +61,7 @@ const vaClient = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE' });
 Include this in your page header.
 
 ```html
-<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.0-rc.0.js"></script>
+<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.0-rc.1.js"></script>
 ```
 
 Initialize.
@@ -86,6 +86,7 @@ node testSDK
 To run the web page demo:
 
 ```sh
+npm run write-version
 npm run start
 
 ```
