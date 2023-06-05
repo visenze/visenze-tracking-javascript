@@ -15,9 +15,7 @@ const TIMEOUT = 15000;
  * @internal
  */
 function _timeout(ms: number, promise: Promise<unknown>): Promise<unknown> {
-  const to = new Promise((_, reject) =>
-    setTimeout(() => reject(Error(`Timed out in ${ms} ms`)), ms)
-  );
+  const to = new Promise((_, reject) => setTimeout(() => reject(Error(`Timed out in ${ms} ms`)), ms));
   return Promise.race([to, promise]);
 }
 
@@ -79,12 +77,7 @@ const _sendGetRequest = (
   return _sendRequest(fetchObj, path, callback, failure);
 };
 
-export default function Tracker(configs: {
-  code: string;
-  uid?: string;
-  isCN?: boolean;
-  endpoint?: string;
-}): VAClient {
+export default function Tracker(configs: { code: string; uid?: string; isCN?: boolean; endpoint?: string }): VAClient {
   const code = configs.code;
   const sessionManager = SessionManager(configs.uid);
   const isCN = !!configs.isCN;
@@ -118,10 +111,7 @@ export default function Tracker(configs: {
     generateUUID(): string {
       return sessionManager.generateUUID();
     },
-    validateEvents(
-      events: unknown,
-      failCallback?: (err: Error) => void
-    ): boolean {
+    validateEvents(events: unknown, failCallback?: (err: Error) => void): boolean {
       if (!Array.isArray(events)) {
         failCallback?.(Error('events must be an array'));
         return false;
@@ -144,7 +134,7 @@ export default function Tracker(configs: {
 
       const defaultParams = this.getDefaultParams(action);
       const params = addData(defaultParams, event);
-      _sendGetRequest(path, params, successCallback, failCallback);
+      void _sendGetRequest(path, params, successCallback, failCallback);
     },
     sendEvents(
       action: string,

@@ -3,5 +3,5 @@ lib
 babel.config.json
 webpack.dev.js
 webpack.prod.js
-csj
+cjs
 esm
