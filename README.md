@@ -61,7 +61,7 @@ const vaClient = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE' });
 Include this in your page header.
 
 ```html
-<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.0-rc.2.js"></script>
+<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.0-rc.3.js"></script>
 ```
 
 Initialize.
