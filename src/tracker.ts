@@ -24,7 +24,6 @@ function _timeout(ms: number, promise: Promise<unknown>): Promise<unknown> {
  */
 const _sendRequest = (
   fetchObj: Promise<Response>,
-  path: string,
   callback?: () => void,
   failure?: (errResponse: unknown) => void
 ): Promise<void> => {
@@ -74,7 +73,7 @@ const _sendGetRequest = (
     method: 'GET',
   });
 
-  return _sendRequest(fetchObj, path, callback, failure);
+  return _sendRequest(fetchObj, callback, failure);
 };
 
 export default function Tracker(configs: { code: string; uid?: string; isCN?: boolean; endpoint?: string }): VAClient {
@@ -147,21 +146,21 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
       }
       const batchId = sessionManager.generateUUID();
       events.forEach((event) => {
-        if (action.toLowerCase() === 'transaction' && !event.transId) {
-          event.transId = batchId;
+        if (action.toLowerCase() === 'transaction' && !event['transId']) {
+          event['transId'] = batchId;
         }
         this.sendEvent(action, event, successCallback, failCallback);
       });
     },
     getDefaultParams(action?: string): Record<string, unknown> {
       const defaultParams: Record<string, unknown> = {};
-      defaultParams.code = code;
-      defaultParams.sid = sessionManager.getSessionId();
-      defaultParams.uid = sessionManager.getUID();
-      defaultParams.sdk = SDK;
-      defaultParams.v = SDK_VERSION;
-      defaultParams.action = action;
-      defaultParams.ts = new Date().getTime();
+      defaultParams['code'] = code;
+      defaultParams['sid'] = sessionManager.getSessionId();
+      defaultParams['uid'] = sessionManager.getUID();
+      defaultParams['sdk'] = SDK;
+      defaultParams['v'] = SDK_VERSION;
+      defaultParams['action'] = action;
+      defaultParams['ts'] = new Date().getTime();
       return defaultParams;
     },
   };

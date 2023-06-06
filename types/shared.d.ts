@@ -23,11 +23,6 @@ export interface VAClient {
 
 declare global {
   interface Window {
-    ViSenzeAnalytics?: (configs: {
-      code: string;
-      uid?: string;
-      isCN?: boolean;
-      endpoint?: string;
-    }) => VAClient;
+    ViSenzeAnalytics?: (configs: { code: string; uid?: string; isCN?: boolean; endpoint?: string }) => VAClient;
   }
 }

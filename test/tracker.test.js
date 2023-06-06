@@ -35,12 +35,7 @@ describe('sendEvents', () => {
   });
 
   test('invalid array should not send event', () => {
-    tracker.sendEvents(
-      'transaction',
-      'invalid',
-      mockCallback,
-      mockFailCallback
-    );
+    tracker.sendEvents('transaction', 'invalid', mockCallback, mockFailCallback);
     tracker.sendEvents('transaction', {}, mockCallback, mockFailCallback);
     tracker.sendEvents('transaction', '', mockCallback, mockFailCallback);
     tracker.sendEvents('transaction', null, mockCallback, mockFailCallback);
@@ -51,9 +46,7 @@ describe('sendEvents', () => {
 
   test('empty array should not send event', () => {
     tracker.sendEvents('transaction', [], mockCallback, mockFailCallback);
-    expect(mockFailCallback).toBeCalledWith(
-      Error('events must have at least 1 item')
-    );
+    expect(mockFailCallback).toBeCalledWith(Error('events must have at least 1 item'));
     expect(tracker.sendEvent).toHaveBeenCalledTimes(0);
   });
 
@@ -68,12 +61,7 @@ describe('sendEvents', () => {
   test('2 events in array', () => {
     const event1 = {};
     const event2 = {};
-    tracker.sendEvents(
-      'transaction',
-      [event1, event2],
-      mockCallback,
-      mockFailCallback
-    );
+    tracker.sendEvents('transaction', [event1, event2], mockCallback, mockFailCallback);
     expect(mockSessionManager.generateUUID).toHaveBeenCalledTimes(1);
     expect(tracker.sendEvent).toHaveBeenCalledTimes(2);
     expect(event1.transId).toBe(mockGeneratedUUID);
@@ -99,12 +87,7 @@ describe('sendEvents', () => {
   test('event with transId should not overwrite transId', () => {
     const event1 = { transId: 'mock-transId' };
     const event2 = {};
-    tracker.sendEvents(
-      'transaction',
-      [event1, event2],
-      mockCallback,
-      mockFailCallback
-    );
+    tracker.sendEvents('transaction', [event1, event2], mockCallback, mockFailCallback);
     expect(mockSessionManager.generateUUID).toHaveBeenCalledTimes(1);
     expect(tracker.sendEvent).toHaveBeenCalledTimes(2);
     expect(event1.transId).toBe('mock-transId');

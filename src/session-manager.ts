@@ -18,10 +18,6 @@ export default function SessionManager(
 } {
   let uid = '';
 
-  if (user_uid) {
-    uid = user_uid;
-  }
-
   /**
    * @internal
    */
@@ -50,13 +46,19 @@ export default function SessionManager(
     }
   };
 
+  if (user_uid) {
+    uid = user_uid;
+    _setLocalStorage(KEY_UID, uid);
+  }
+
   return {
     isSameDay(t1: number, t2: number): boolean {
       const d1 = new Date(t1);
       const d2 = new Date(t2);
       return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     },
-    setUID(uid: string | null): void {
+    setUID(newUid: string | null): void {
+      uid = newUid || '';
       if (uid) {
         _setLocalStorage(KEY_UID, uid);
       }
@@ -73,14 +75,13 @@ export default function SessionManager(
     // get uid from local storage, if uuid is not created yet
     // create a new uuid and store in localstorage.
     getUID(): string {
-      let uid = _getLocalStorage(KEY_UID);
       if (!uid) {
         uid = this.generateUUID();
         _setLocalStorage(KEY_UID, uid);
       }
       return uid;
     },
-    //  get sid from local storage without resetting session timer
+    // get sid from local storage without resetting session timer
     // if sid is not created yet, then create a new sid and store in local storage
     getSID(): string {
       const sid = _getLocalStorage(KEY_SID);
