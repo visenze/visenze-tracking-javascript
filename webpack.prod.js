@@ -27,11 +27,13 @@ const s3plugin = new S3Plugin({
 
 module.exports = (_, argv) => {
   const mode = argv.mode || 'production';
-  const filename =
-    mode === 'development' ? `tracking.js` : `tracking.${version}.js`;
+  const filename = mode === 'development' ? `tracking.js` : `tracking.${version}.js`;
   const configs = {
     resolve: {
       extensions: ['.ts', '.js'],
+      extensionAlias: {
+        '.js': ['.js', '.ts'],
+      },
     },
     entry: {
       main: path.join(__dirname, 'src/index.ts'),
