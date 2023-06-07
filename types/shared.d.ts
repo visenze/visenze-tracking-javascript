@@ -1,10 +1,14 @@
-export interface VAClient {
+export interface SessionManager {
+  setUID(uid: string | null): void;
   getUID(): string;
-  setUID(uid: string): void;
   getSID(): string;
+  generateUUID(): string;
+  getSessionId(): string;
   resetSession(): string;
   getSessionTimeRemaining(): number;
-  generateUUID(): string;
+}
+
+export interface VAClient extends Omit<SessionManager, 'getSessionId'> {
   validateEvents(events: unknown, failCallback?: (err: Error) => void): boolean;
   sendEvent(
     action: string,
@@ -18,7 +22,7 @@ export interface VAClient {
     successCallback: () => void,
     failCallback: (err: unknown) => void
   ): void;
-  getDefaultParams(action?: string): Record<string, unknown>;
+  getDefaultTrackingParams(action?: string): Record<string, unknown>;
 }
 
 declare global {

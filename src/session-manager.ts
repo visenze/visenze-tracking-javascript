@@ -1,21 +1,11 @@
+import { SessionManager } from '../types/shared';
+
 const SESSION_TIMEOUT = 1800000;
 const KEY_UID = 'va-uid';
 const KEY_SID = 'va-key-sid';
 const KEY_SID_TIMESTAMP = 'va-key-sid-timestamp';
 
-export default function SessionManager(
-  user_uid?: string
-): {
-  isSameDay(t1: number, t2: number): boolean;
-  setUID(uid: string | null): void;
-  getSessionTimestamp(): number;
-  getUID(): string;
-  getSID(): string;
-  generateUUID(): string;
-  getSessionId(): string;
-  resetSession(): string;
-  getSessionTimeRemaining(): number;
-} {
+export default function Session(user_uid?: string): SessionManager {
   let uid = '';
 
   /**
@@ -46,35 +36,43 @@ export default function SessionManager(
     }
   };
 
+  /**
+   * @internal
+   */
+  const _isSameDay = (t1: number, t2: number): boolean => {
+    const d1 = new Date(t1);
+    const d2 = new Date(t2);
+    return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+  };
+
+  /**
+   * @internal
+   */
+  const _getSessionTimestamp = (): number => {
+    const timestamp: string | null = _getLocalStorage(KEY_SID_TIMESTAMP);
+    if (!timestamp) {
+      const time = new Date().getTime();
+      _setLocalStorage(KEY_SID_TIMESTAMP, time.toString());
+      return time;
+    }
+    return parseInt(timestamp);
+  };
+
   if (user_uid) {
     uid = user_uid;
     _setLocalStorage(KEY_UID, uid);
   }
 
   return {
-    isSameDay(t1: number, t2: number): boolean {
-      const d1 = new Date(t1);
-      const d2 = new Date(t2);
-      return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
-    },
-    setUID(newUid: string | null): void {
+    setUID(newUid) {
       uid = newUid || '';
       if (uid) {
         _setLocalStorage(KEY_UID, uid);
       }
     },
-    getSessionTimestamp(): number {
-      const timestamp: string | null = _getLocalStorage(KEY_SID_TIMESTAMP);
-      if (!timestamp) {
-        const time = new Date().getTime();
-        _setLocalStorage(KEY_SID_TIMESTAMP, time.toString());
-        return time;
-      }
-      return parseInt(timestamp);
-    },
     // get uid from local storage, if uuid is not created yet
     // create a new uuid and store in localstorage.
-    getUID(): string {
+    getUID() {
       if (!uid) {
         uid = this.generateUUID();
         _setLocalStorage(KEY_UID, uid);
@@ -83,7 +81,7 @@ export default function SessionManager(
     },
     // get sid from local storage without resetting session timer
     // if sid is not created yet, then create a new sid and store in local storage
-    getSID(): string {
+    getSID() {
       const sid = _getLocalStorage(KEY_SID);
       if (!sid) {
         return this.getSessionId();
@@ -91,7 +89,7 @@ export default function SessionManager(
 
       return sid;
     },
-    generateUUID(): string {
+    generateUUID() {
       let d = new Date().getTime();
       const uuid = 'xxxxxxxx.xxxx.4xxx.yxxx.xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         const r = (d + Math.random() * 16) % 16 | 0;
@@ -101,12 +99,13 @@ export default function SessionManager(
       return uuid;
     },
     // if sid is not created yet, then create a new sid and store in local storage
-    getSessionId(): string {
+    // this method resets the session timestamp
+    getSessionId() {
       const now = new Date().getTime();
       let sid = _getLocalStorage(KEY_SID);
-      const sessionTimestamp = this.getSessionTimestamp();
+      const sessionTimestamp = _getSessionTimestamp();
 
-      if (!sid || now - sessionTimestamp > SESSION_TIMEOUT || !this.isSameDay(now, sessionTimestamp)) {
+      if (!sid || now - sessionTimestamp > SESSION_TIMEOUT || !_isSameDay(now, sessionTimestamp)) {
         sid = this.generateUUID();
         _setLocalStorage(KEY_SID, sid);
       }
@@ -114,12 +113,12 @@ export default function SessionManager(
       _setLocalStorage(KEY_SID_TIMESTAMP, now.toString());
       return sid;
     },
-    resetSession(): string {
+    resetSession() {
       _removeLocalStorage(KEY_SID);
       _removeLocalStorage(KEY_SID_TIMESTAMP);
       return this.getSessionId();
     },
-    getSessionTimeRemaining(): number {
+    getSessionTimeRemaining() {
       const now = new Date().getTime();
       const sessionTimestamp = _getLocalStorage(KEY_SID_TIMESTAMP);
 
@@ -128,7 +127,7 @@ export default function SessionManager(
       }
 
       const timestamp = parseInt(sessionTimestamp);
-      if (!this.isSameDay(now, timestamp) || now - timestamp > SESSION_TIMEOUT) {
+      if (!_isSameDay(now, timestamp) || now - timestamp > SESSION_TIMEOUT) {
         return 0;
       }
 

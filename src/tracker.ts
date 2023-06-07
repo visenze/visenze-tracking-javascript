@@ -1,6 +1,6 @@
 import fetch, { Response } from 'node-fetch';
 import URI from 'jsuri';
-import SessionManager from './session-manager.js';
+import Session from './session-manager.js';
 import { addData } from './data-collection.js';
 import { version } from './version.js';
 import { VAClient } from '../types/shared';
@@ -78,7 +78,7 @@ const _sendGetRequest = (
 
 export default function Tracker(configs: { code: string; uid?: string; isCN?: boolean; endpoint?: string }): VAClient {
   const code = configs.code;
-  const sessionManager = SessionManager(configs.uid);
+  const sessionManager = Session(configs.uid);
   const isCN = !!configs.isCN;
   const endpoint = configs.endpoint;
 
@@ -92,25 +92,25 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
   }
 
   return {
-    getUID(): string {
+    getUID() {
       return sessionManager.getUID();
     },
-    setUID(uid: string): void {
+    setUID(uid) {
       sessionManager.setUID(uid);
     },
-    getSID(): string {
+    getSID() {
       return sessionManager.getSID();
     },
-    resetSession(): string {
+    resetSession() {
       return sessionManager.resetSession();
     },
-    getSessionTimeRemaining(): number {
+    getSessionTimeRemaining() {
       return sessionManager.getSessionTimeRemaining();
     },
-    generateUUID(): string {
+    generateUUID() {
       return sessionManager.generateUUID();
     },
-    validateEvents(events: unknown, failCallback?: (err: Error) => void): boolean {
+    validateEvents(events, failCallback) {
       if (!Array.isArray(events)) {
         failCallback?.(Error('events must be an array'));
         return false;
@@ -123,24 +123,14 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
 
       return true;
     },
-    sendEvent(
-      action: string,
-      event: Record<string, unknown>,
-      successCallback: () => void,
-      failCallback: (err: unknown) => void
-    ): void {
+    sendEvent(action, event, successCallback, failCallback) {
       const path = `${baseUrl}/__va.gif`;
 
-      const defaultParams = this.getDefaultParams(action);
+      const defaultParams = this.getDefaultTrackingParams(action);
       const params = addData(defaultParams, event);
       void _sendGetRequest(path, params, successCallback, failCallback);
     },
-    sendEvents(
-      action: string,
-      events: Record<string, unknown>[],
-      successCallback: () => void,
-      failCallback: (err: unknown) => void
-    ): void {
+    sendEvents(action, events, successCallback, failCallback) {
       if (!this.validateEvents(events, failCallback)) {
         return;
       }
@@ -152,15 +142,17 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
         this.sendEvent(action, event, successCallback, failCallback);
       });
     },
-    getDefaultParams(action?: string): Record<string, unknown> {
+    getDefaultTrackingParams(action) {
       const defaultParams: Record<string, unknown> = {};
       defaultParams['code'] = code;
       defaultParams['sid'] = sessionManager.getSessionId();
       defaultParams['uid'] = sessionManager.getUID();
       defaultParams['sdk'] = SDK;
       defaultParams['v'] = SDK_VERSION;
-      defaultParams['action'] = action;
       defaultParams['ts'] = new Date().getTime();
+      if (action) {
+        defaultParams['action'] = action;
+      }
       return defaultParams;
     },
   };
