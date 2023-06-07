@@ -1,4 +1,5 @@
 import va from './tracker.js';
+import { VAClient } from '../types/shared';
 
 (function init(context): void {
   if (typeof window !== 'undefined' && context && !context.ViSenzeAnalytics) {
@@ -7,3 +8,4 @@ import va from './tracker.js';
 })(typeof self !== 'undefined' ? self : this);
 
 export default va;
+export { VAClient };
