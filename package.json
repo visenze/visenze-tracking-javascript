@@ -17,7 +17,7 @@
     "build-js": "npm run write-version && webpack --config webpack.prod.js",
     "build-cjs": "rm -fr cjs/* && tsc -p tsconfig.cjs.json",
     "build-esm": "rm -fr esm/* && tsc -p tsconfig.json",
-    "build-pkg": "npm run write-version && npm run build-cjs && npm run build-esm && ./fixup",
+    "prepack": "npm run write-version && npm run build-cjs && npm run build-esm && ./fixup",
     "test": "jest",
     "lint": "eslint src --ext .ts"
   },

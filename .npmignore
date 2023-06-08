@@ -18,6 +18,7 @@ test/
 jest.config.js
 
 src/
+index.ts
 webpack.dev.js
 webpack.prod.js
 fixup

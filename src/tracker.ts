@@ -91,7 +91,7 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
     baseUrl = BASE_URL;
   }
 
-  return {
+  const client: VAClient = {
     getUID() {
       return sessionManager.getUID();
     },
@@ -156,4 +156,6 @@ export default function Tracker(configs: { code: string; uid?: string; isCN?: bo
       return defaultParams;
     },
   };
+
+  return client;
 }

@@ -63,7 +63,7 @@ export default function Session(user_uid?: string): SessionManager {
     _setLocalStorage(KEY_UID, uid);
   }
 
-  return {
+  const manager: SessionManager = {
     setUID(newUid) {
       uid = newUid || '';
       if (uid) {
@@ -134,4 +134,6 @@ export default function Session(user_uid?: string): SessionManager {
       return SESSION_TIMEOUT - (now - timestamp);
     },
   };
+
+  return manager;
 }

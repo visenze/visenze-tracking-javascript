@@ -36,7 +36,7 @@ module.exports = (_, argv) => {
       },
     },
     entry: {
-      main: path.join(__dirname, 'src/index.ts'),
+      main: path.join(__dirname, './index.ts'),
     },
     output: {
       path: path.join(__dirname, 'dist'),

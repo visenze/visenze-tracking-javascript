@@ -13,14 +13,14 @@ export interface VAClient extends Omit<SessionManager, 'getSessionId'> {
   sendEvent(
     action: string,
     eventParams: Record<string, unknown>,
-    successCallback: () => void,
-    failCallback: (err: unknown) => void
+    successCallback?: () => void,
+    failCallback?: (err: unknown) => void
   ): void;
   sendEvents(
     action: string,
     eventParamsList: Record<string, unknown>[],
-    successCallback: () => void,
-    failCallback: (err: unknown) => void
+    successCallback?: () => void,
+    failCallback?: (err: unknown) => void
   ): void;
   getDefaultTrackingParams(action?: string): Record<string, unknown>;
 }

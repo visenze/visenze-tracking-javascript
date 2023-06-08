@@ -4,8 +4,14 @@ const webpack = require('webpack');
 
 const config = () => {
   return {
+    resolve: {
+      extensions: ['.ts', '.js'],
+      extensionAlias: {
+        '.js': ['.js', '.ts'],
+      },
+    },
     devtool: 'source-map',
-    entry: path.resolve(__dirname, 'src/index.ts'),
+    entry: path.resolve(__dirname, 'index.ts'),
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'index_bundle.js',
@@ -36,9 +42,6 @@ const config = () => {
       }),
       new webpack.HotModuleReplacementPlugin(),
     ],
-    resolve: {
-      extensions: ['.js', '.ts'],
-    },
   };
 };
 
