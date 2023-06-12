@@ -1,20 +1,28 @@
 .idea/
 
-tracking/index.html
-tracking/index-dev.js
-tracking/dist/
+index.html
+index-dev.js
 dist/
 
 *.tgz
 .codeclimate.yml
 .eslintrc.js
+.eslintignore
 aws-profile.json
-.babelrc
+babel.config.json
+.vscode
+.env
 
 test/
 *.test.js
+jest.config.js
 
-testSDK.js
+src/
+index.ts
 webpack.dev.js
 webpack.prod.js
+fixup
+tsconfig.json
+tsconfig.cjs.json
+tsconfig.base.json
 

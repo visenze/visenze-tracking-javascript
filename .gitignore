@@ -66,9 +66,16 @@ typings/
 # Idea files
 .idea/
 
+# Vscode
+.vscode
+
 # Tracking dist folder
-tracking/dist
 /dist
+/lib
+/esm
+/cjs
 
 # AWS profile
 aws-profile.json
+
+version.ts

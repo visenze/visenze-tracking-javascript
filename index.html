@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8" />
+    <title>visenze tracking demo</title>
+    <meta name="description" content="A page to test the different widgets" />
+    <meta name="viewport" content="width=device-width" />
+
+    <style type="text/css" media="screen, print">
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    </style>
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <!-- endbuild -->
+  </head>
+
+  <body onload="myfunction()">
+    <div class="container">
+      <p>visenze tracking demo</p>
+
+      <p>
+        uid: <span id="uid"></span>
+        <br />
+        sid: <span id="sid"></span>
+        <br />
+        session time remaining: <span id="sessionTimeRemaining"></span>
+      </p>
+
+      <p>
+        new uid: <input id="newUidText" />
+        <button onclick="testSetUID()">replace</button>
+      </p>
+
+      <button onclick="testResetSession()">reset session</button>
+
+      <button onclick="testClick()">test click</button>
+
+      <button onclick="productClick()">Product click</button>
+
+      <button onclick="testSearch()">test search</button>
+
+      <button onclick="testCreateView()">test create view</button>
+
+      <button onclick="testAddCart()">test add cart</button>
+
+      <button onclick="testTransaction()">test transaction</button>
+
+      <button onclick="testTransactions()">test transactions</button>
+
+      <button onclick="testCustomEvents()">test custom events</button>
+    </div>
+
+    <script>
+      var tracker;
+      function myfunction() {
+        // TODO: insert your tracker code here
+        const isCN = false; // flag to send event to CN endpoint
+        tracker = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE', isCN: isCN });
+
+        document.getElementById('uid').textContent = tracker.getUID();
+      }
+
+      function testSetUID() {
+        console.log('new uid');
+        tracker.setUID(document.getElementById('newUidText').value);
+        document.getElementById('newUidText').value = '';
+
+        document.getElementById('uid').textContent = tracker.getUID();
+      }
+
+      function testResetSession() {
+        console.log('reset session');
+        const newSid = tracker.resetSession();
+        console.log('new session id', newSid);
+
+        document.getElementById('sid').textContent = tracker.getSID();
+      }
+
+      setInterval(() => {
+        document.getElementById('sid').textContent = tracker.getSID();
+        document.getElementById(
+          'sessionTimeRemaining'
+        ).textContent = tracker.getSessionTimeRemaining();
+      }, 1000);
+
+      function testClick() {
+        console.log('click');
+        tracker.sendEvent(
+          'click',
+          {
+            name: 'testclick',
+            web_host: 'test_webhost',
+            test_data: 'test',
+            os: 'fake_os',
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send testClick failed: ', err);
+          }
+        );
+      }
+
+      function productClick() {
+        console.log('product click');
+        tracker.sendEvent(
+          'product_click',
+          {
+            name: 'testProductClick',
+            queryId: '123',
+            pid: 'pid',
+            pos: 1,
+            imUrl:
+              'https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg',
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send testProductClick failed');
+          }
+        );
+      }
+
+      function testSearch() {
+        console.log('test search event');
+
+        tracker.sendEvent(
+          'search',
+          {
+            name: 'testSearch',
+            queryId: '123',
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send test search failed');
+          }
+        );
+      }
+
+      function testCreateView() {
+        console.log('test create view');
+        tracker.sendEvent(
+          'view',
+          {
+            name: 'testView',
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send test view failed');
+          }
+        );
+      }
+
+      function testAddCart() {
+        console.log('test add cart');
+        tracker.sendEvent(
+          'add_to_cart',
+          {
+            name: 'testAddCart',
+            queryId: '123',
+            pid: 'pid',
+            imUrl:
+              'https://i.pinimg.com/originals/18/c1/fa/18c1fad69bd35a9f3bbacae3ad1dfcc2.jpg',
+            pos: 2,
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send add cart failed');
+          }
+        );
+      }
+
+      function testTransaction() {
+        console.log('test transaction');
+        tracker.sendEvent(
+          'transaction',
+          {
+            name: 'testTransaction',
+            queryId: '124',
+            transId: '3333',
+            value: 24.5,
+          },
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send transaction failed');
+          }
+        );
+      }
+
+      function testTransactions() {
+        console.log('test transactions');
+        tracker.sendEvents(
+          'transaction',
+          [
+            {
+              name: 'testTransactions',
+              queryId: '124',
+              transId: '3333',
+              value: 24.5,
+            },
+            {
+              name: 't1',
+              queryId: '124',
+              value: 67.8,
+            },
+            {
+              name: 't2',
+              queryId: '124',
+              value: 12.3,
+            },
+          ],
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send transaction failed');
+          }
+        );
+      }
+
+      function testCustomEvents() {
+        console.log('test custom events');
+        tracker.sendEvents(
+          'custom_event',
+          [
+            {
+              name: 'c1',
+              queryId: '124',
+            },
+            {
+              name: 'c2',
+              queryId: '124',
+            },
+            {
+              name: 'c3',
+              queryId: '124',
+            },
+          ],
+          (success) => {
+            console.log(success);
+          },
+          (err) => {
+            console.error('send transaction failed');
+          }
+        );
+      }
+    </script>
+  </body>
+</html>

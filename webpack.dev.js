@@ -2,49 +2,49 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const config = (directory) => {
-    return {
-        devtool: 'source-map',
-        entry: path.resolve(directory, 'index-dev.js'),
-        output: {
-            path: path.resolve(directory, 'dist'),
-            filename: 'index_bundle.js',
-            publicPath: '/',
+const config = () => {
+  return {
+    resolve: {
+      extensions: ['.ts', '.js'],
+      extensionAlias: {
+        '.js': ['.js', '.ts'],
+      },
+    },
+    devtool: 'source-map',
+    entry: path.resolve(__dirname, 'index.ts'),
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'index_bundle.js',
+      publicPath: '/',
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-typescript'],
+          },
         },
-        mode: 'development',
-        module: {
-            rules: [
-                {test: /\.(js|jsx)$/, exclude: /node_modules/, use: ['babel-loader']},
-                {
-                    test: /\.(sc|c)ss$/, use: ['style-loader', 'css-loader', {
-                        loader: "postcss-loader",
-                        options: {
-                            plugins: () => [require("autoprefixer")()],
-                        },
-                    }, 'sass-loader']
-                },
-                {test: /\.(jpe|jpg)$/, use: ["file-loader"]},
-                {test: /\.(png|eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/, use: ["url-loader"]}
-            ]
-        },
-        devServer: {
-            host: '0.0.0.0',
-            compress: true,
-            hot: true,
-            open: true,
-        },
-        plugins: [
-            new HtmlWebpackPlugin({
-                template: path.resolve(directory, 'index.html')
-            }),
-            new webpack.HotModuleReplacementPlugin(),
-        ],
-        resolve: {
-            extensions: ['.js', '.jsx', '.css']
-        },
-    }
+      ],
+    },
+    devServer: {
+      host: '0.0.0.0',
+      compress: true,
+      hot: true,
+      open: true,
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'index.html'),
+      }),
+      new webpack.HotModuleReplacementPlugin(),
+    ],
+  };
 };
 
-module.exports = directory => {
-    return config(directory);
+module.exports = (directory) => {
+  return config(directory);
 };
