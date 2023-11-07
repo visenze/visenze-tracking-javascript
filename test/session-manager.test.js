@@ -23,9 +23,9 @@ describe('init', () => {
     expect(sm.getUID()).toBe('new UID');
   });
 
-  test('with generated uid', () => {
+  test('with no uid, use one from local storage', () => {
     sm = SessionManager();
-    expect(sm.getUID()).not.toBe(mockUUID);
+    expect(sm.getUID()).toBe(mockUUID);
   });
 
   test('with generated sid', () => {
@@ -44,6 +44,32 @@ describe('local storage', () => {
   });
 });
 
+describe('uid', () => {
+  test('is same for same session', () => {
+    jest.setSystemTime(new Date(2000, 1, 1, 1, 0));
+    const uid = sm.getUID();
+    jest.setSystemTime(new Date(2000, 1, 1, 1, 29));
+    const newUID = sm.getUID();
+    expect(newUID).toBe(uid);
+
+    const newInstance = SessionManager();
+    const newUIDNewInstance = newInstance.getUID();
+    expect(newUIDNewInstance).toBe(uid);
+  });
+
+  test('is same after session expires', () => {
+    jest.setSystemTime(new Date(2000, 1, 1, 1, 0));
+    const uid = sm.getUID();
+    jest.setSystemTime(new Date(2000, 1, 1, 1, 31));
+    const newUID = sm.getUID();
+    expect(newUID).toBe(uid);
+
+    const newInstance = SessionManager();
+    const newUIDNewInstance = newInstance.getUID();
+    expect(newUIDNewInstance).toBe(uid);
+  });
+});
+
 describe('sid', () => {
   test('is same for same session', () => {
     jest.setSystemTime(new Date(2000, 1, 1, 1, 0));
@@ -51,6 +77,10 @@ describe('sid', () => {
     jest.setSystemTime(new Date(2000, 1, 1, 1, 29));
     const newSid = sm.getSessionId();
     expect(newSid).toBe(sid);
+
+    const newInstance = SessionManager();
+    const newSIDNewInstance = newInstance.getSID();
+    expect(newSIDNewInstance).toBe(sid);
   });
 
   test('resets after session expires', () => {

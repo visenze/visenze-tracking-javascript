@@ -6,8 +6,6 @@ const KEY_SID = 'va-key-sid';
 const KEY_SID_TIMESTAMP = 'va-key-sid-timestamp';
 
 export default function Session(user_uid?: string): SessionManager {
-  let uid = '';
-
   /**
    * @internal
    */
@@ -59,20 +57,19 @@ export default function Session(user_uid?: string): SessionManager {
   };
 
   if (user_uid) {
-    uid = user_uid;
-    _setLocalStorage(KEY_UID, uid);
+    _setLocalStorage(KEY_UID, user_uid);
   }
 
   const manager: SessionManager = {
     setUID(newUid) {
-      uid = newUid || '';
-      if (uid) {
-        _setLocalStorage(KEY_UID, uid);
+      if (newUid) {
+        _setLocalStorage(KEY_UID, newUid);
       }
     },
     // get uid from local storage, if uuid is not created yet
     // create a new uuid and store in localstorage.
     getUID() {
+      let uid = _getLocalStorage(KEY_UID);
       if (!uid) {
         uid = this.generateUUID();
         _setLocalStorage(KEY_UID, uid);
