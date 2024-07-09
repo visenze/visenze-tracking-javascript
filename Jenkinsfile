@@ -1,7 +1,7 @@
 @Library('visenze-lib')_
 
 def runDockerCmd(cmd) {
-  return "docker run --rm -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} node:16-bullseye-slim ${cmd}"
+  return "docker run --rm -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} node:18-bullseye-slim ${cmd}"
 }
 
 pipeline {
