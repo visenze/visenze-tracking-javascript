@@ -1,5 +1,4 @@
 import fetch, { Response } from 'node-fetch';
-import URI from 'jsuri';
 import Session from './session-manager.js';
 import { addData } from './data-collection.js';
 import { version } from './version.js';
@@ -64,11 +63,10 @@ const _sendGetRequest = (
   callback?: () => void,
   failure?: (errResponse: unknown) => void
 ): Promise<void> => {
-  const uri = new URI(path);
+  const url = new URL(path);
   Object.entries(params).forEach(([key, value]) => {
-    uri.addQueryParam(key, value as jsuri.Primitive);
+    url.searchParams.append(key, value as string);
   });
-  const url = uri.toString();
   const fetchObj = fetch(url, {
     method: 'GET',
   });
