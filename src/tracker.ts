@@ -1,4 +1,3 @@
-import fetch, { Response } from 'node-fetch';
 import Session from './session-manager.js';
 import { addData } from './data-collection.js';
 import { version } from './version.js';
