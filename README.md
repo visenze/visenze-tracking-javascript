@@ -54,7 +54,7 @@ Your credentials can be found in [ViSenze console](https://console.visenze.com).
 Include this in your page header.
 
 ```html
-<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.2.js"></script>
+<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.3.0.0.js"></script>
 ```
 
 Initialize as follows:
