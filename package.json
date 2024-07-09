@@ -19,6 +19,7 @@
     "build-esm": "rm -fr esm/* && tsc -p tsconfig.json",
     "prepack": "npm run write-version && npm run build-cjs && npm run build-esm && ./fixup",
     "test": "jest",
+    "test-with-coverage": "jest --coverage",
     "lint": "eslint src --ext .ts"
   },
   "repository": {
