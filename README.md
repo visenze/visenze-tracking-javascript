@@ -20,27 +20,15 @@ JavaScript SDK for ViSenze Analytics
 
 ## 1. Overview
 
-Visenze Analytics is a key part of your analytics solutions, allowing you to track key events and view the resulting analytics and performance data. For more details, see [ViSenze Analytics API Documentation](https://docs-internal.visenze.com/Analytics/tracker.html).
+ViSenze Analytics is a key part of your analytics solutions, allowing you to track key events and view the resulting analytics and performance data. For more details, see [ViSenze Analytics API Documentation](https://ref-docs.visenze.com/docs/tracking).
 
-The ViSenze Tracking JavaScript SDK is an open source software for easy integration of ViSearch Tracking API with your javascript application. For source code and references, visit the [GitHub repository](https://github.com/visenze/visenze-tracking-javascript).
+The ViSenze Tracking JavaScript SDK is an open source software for easy integration of ViSenze Analytics API with your JavaScript application, including web pages. For source code and references, visit the [GitHub repository](https://github.com/visenze/visenze-tracking-javascript).
 
 - Latest stable version: ![npm version](https://img.shields.io/npm/v/visenze-tracking-javascript.svg?style=flat)
 
 ## 2. Setup and initialization
 
 ### 2.1 Node
-
-From project root directory run npm install to install the dependencies.
-
-```sh
-npm install
-
-```
-
-Replace `YOUR_TRACKER_CODE` with your ViSenze Analytics tracking code.
-It is recommended to initiate the client when the SDK is loaded into the page.
-
-Your credentials can be found in [ViSearch Dashboard](https://dashboard.visenze.com)
 
 For usage with Node.js projects:
 
@@ -56,20 +44,30 @@ import ViSenzeAnalytics from 'visenze-tracking-javascript';
 const vaClient = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE' });
 ```
 
+Replace `YOUR_TRACKER_CODE` with your ViSenze Analytics tracking code.
+It is recommended to initialize the client when the SDK is loaded into the page.
+
+Your credentials can be found in [ViSenze console](https://console.visenze.com).
+
 ### 2.2 Browser
 
 Include this in your page header.
 
 ```html
-<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.0.js"></script>
+<script type="text/javascript" src="https://cdn.visenze.com/visearch/dist/js/tracking.2.0.2.js"></script>
 ```
 
-Initialize.
+Initialize as follows:
 
 ```js
 // Initialize
 var vaClient = ViSenzeAnalytics({ code: 'YOUR_TRACKER_CODE' });
 ```
+
+Replace `YOUR_TRACKER_CODE` with your ViSenze Analytics tracking code.
+It is recommended to initialize the client when the SDK is loaded into the page.
+
+Your credentials can be found in [ViSenze console](https://console.visenze.com).
 
 ### 2.3 Run the Demo
 
@@ -77,18 +75,11 @@ This repository comes with an example of the SDK usage. In order to run the exam
 
 You will need to fill up your tracking code in the relevant demo files.
 
-To run the Node.js demo:
-
-```sh
-node testSDK
-```
-
-To run the web page demo:
+To run the demo:
 
 ```sh
 npm run write-version
 npm run start
-
 ```
 
-After the above command, the demo pages will be accessible at `http://localhost:8080/index.html`
+After the above command, the demo pages will be accessible at `http://localhost:8080/index.html`.
