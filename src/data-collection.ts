@@ -6,7 +6,6 @@ const addData = (
 ): Record<string, unknown> => {
   userInput['lang'] = getLanguage();
   userInput['sr'] = getScreenResolution();
-  userInput['url'] = typeof window !== 'undefined' ? window.location.href : null;
   userInput['r'] = typeof document !== 'undefined' ? document.referrer : null;
 
   // override/remove user input for the following fields.
